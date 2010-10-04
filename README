@@ -1,3 +1,5 @@
-NÅ HAR VI README FIL :D
-Må slenge på litt i readme-fila for å se om jeg får commita ordentlig
-nano-power
+For å commite:
+git commit -m"I'm lazy" -a && git push
+
+For å update:
+git pull
