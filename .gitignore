@@ -6,3 +6,4 @@
 *.bak
 *.sqlite
 .project
+.pydevproject
