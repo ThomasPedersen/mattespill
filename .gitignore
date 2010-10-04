@@ -4,4 +4,4 @@
 *.swp
 *.log
 *.bak
-
+*.sqlite
