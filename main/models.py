@@ -11,3 +11,5 @@ class User(models.Model):
 	password = models.CharField(max_length=32) # MD5 hash
 
 
+    
+

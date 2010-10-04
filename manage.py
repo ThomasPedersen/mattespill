@@ -8,4 +8,8 @@ except ImportError:
 	sys.exit(1)
 
 if __name__ == "__main__":
+<<<<<<< HEAD
+    execute_manager(settings)
+=======
 	execute_manager(settings)
+>>>>>>> refs/remotes/origin/master
