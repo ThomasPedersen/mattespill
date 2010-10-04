@@ -4,7 +4,7 @@ class Group(models.Model):
 	name = models.CharField(max_length=100)
 
 	def __unicode__(self):
-	    return self.name
+		return self.name
 
 class User(models.Model):
 	access = models.IntegerField()
@@ -13,7 +13,7 @@ class User(models.Model):
 	group = models.ManyToManyField(Group)
 
 	def __unicode__(self):
-	    return self.username
+		return self.username
 
 class Room(models.Model):
 	name = models.CharField(max_length=100)
@@ -29,7 +29,7 @@ class Task(models.Model):
 	room = models.ForeignKey(Room)
 
 	def __unicode__(self):
-	    return self.question
+		return self.question
 
 class Result(models.Model):
 	user = models.ForeignKey(User)
@@ -39,13 +39,13 @@ class Result(models.Model):
 	date_end = models.DateTimeField()
 
 	def __unicode__(self):
-	    return self.user
+		return self.user
 
 class Answer(models.Model):
 	result = models.ForeignKey(Result)
 	answer = models.CharField(max_length=200)
 
 	def __unicode__(self):
-	    return self.answer
+		return self.answer
 
 
