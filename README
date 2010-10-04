@@ -11,3 +11,5 @@ git reset --hard origin
 
 Kommando:
 python manage.py runserver
+
+python manage.py syncdb
