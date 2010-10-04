@@ -5,12 +5,12 @@ from django.conf.urls.defaults import *
 # admin.autodiscover()
 
 urlpatterns = patterns('',
-    # Example:
-    # (r'^mattespill/', include('mattespill.foo.urls')),
+	# Example:
+	# (r'^mattespill/', include('mattespill.foo.urls')),
 
-    # Uncomment the admin/doc line below to enable admin documentation:
-    # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
+	# Uncomment the admin/doc line below to enable admin documentation:
+	# (r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
-    # Uncomment the next line to enable the admin:
-    # (r'^admin/', include(admin.site.urls)),
+	# Uncomment the next line to enable the admin:
+	# (r'^admin/', include(admin.site.urls)),
 )

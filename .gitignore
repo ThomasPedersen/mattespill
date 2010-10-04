@@ -5,3 +5,4 @@
 *.log
 *.bak
 *.sqlite
+.project
