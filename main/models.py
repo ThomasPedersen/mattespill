@@ -19,7 +19,7 @@ class Room(models.Model):
 	name = models.CharField(max_length=100)
 
 	def __unicode__(self):
-	 return self.name
+		return self.name
 
 class Question(models.Model):
 	question = models.CharField(max_length=200)
@@ -47,5 +47,3 @@ class Answer(models.Model):
 
 	def __unicode__(self):
 		return self.answer
-
-
