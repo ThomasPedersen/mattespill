@@ -3,3 +3,7 @@ git commit -m"I'm lazy" -a && git push
 
 For å update:
 git pull
+
+HVIS DU FUCKA OPP OG KLARTE Å SKRIVE RM OG VIL TILBAKE:
+git reset --hard origin
+(voila)
