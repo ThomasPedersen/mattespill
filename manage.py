@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+﻿#!/usr/bin/env python
 from django.core.management import execute_manager
 try:
 	import settings # Assumed to be in the same directory.
@@ -8,8 +8,4 @@ except ImportError:
 	sys.exit(1)
 
 if __name__ == "__main__":
-<<<<<<< HEAD
-    execute_manager(settings)
-=======
 	execute_manager(settings)
->>>>>>> refs/remotes/origin/master
