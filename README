@@ -4,6 +4,6 @@ git commit -m"I'm lazy" -a && git push
 For å update:
 git pull
 
-HVIS DU FUCKA OPP OG KLARTE Å SKRIVE RM OG VIL TILBAKE:
+HVIS DU FUCKA OPP OG KLARTE Å SKRIVE RM OG VIL TILBAKE (OBS! Forkaster alle dine endringer):
 git reset --hard origin
 (voila)
