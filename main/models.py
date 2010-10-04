@@ -21,7 +21,7 @@ class Room(models.Model):
 	def __unicode__(self):
 	 return self.name
 
-class Task(models.Model):
+class Question(models.Model):
 	question = models.CharField(max_length=200)
 	date = models.DateTimeField()
 	answer = models.CharField(max_length=100)
@@ -33,7 +33,7 @@ class Task(models.Model):
 
 class Result(models.Model):
 	user = models.ForeignKey(User)
-	task = models.ForeignKey(Task)
+	task = models.ForeignKey(Question)
 	turn = models.IntegerField()
 	date_start = models.DateTimeField()
 	date_end = models.DateTimeField()
