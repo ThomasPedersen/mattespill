@@ -5,6 +5,9 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
+	(r'^$', 'mattespill.main.views.index'),
+	(r'^users/$', 'mattespill.main.views.users'),
+	(r'^users/(?P<user_id>\d+)/$', 'mattespill.main.views.userid'),
 	# Example:
 	# (r'^mattespill/', include('mattespill.foo.urls')),
 
