@@ -1,6 +1,6 @@
 For å sette navn og mail på innsjekingene:
-$ git config --global user.name "Tekkub"
-$ git config --global user.email "tekkub@gmail.com"
+git config --global user.name "Tekkub"
+git config --global user.email "tekkub@gmail.com"
 
 For å commite:
 git pull && git commit -m"I'm lazy" -a && git push
@@ -12,8 +12,6 @@ HVIS DU FUCKA OPP OG KLARTE Å SKRIVE RM OG VIL TILBAKE (OBS! Forkaster alle din
 git reset --hard origin
 (voila)
 
-
-Kommando:
-python manage.py runserver
-
+For å kjøre testserver:
 python manage.py syncdb
+python manage.py runserver
