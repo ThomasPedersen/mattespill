@@ -2,6 +2,7 @@
 
 from django.utils import simplejson
 from django.http import HttpResponse
+from mattespill.main.models import Question
 
 def index(request):
 	return HttpResponse("Mattespill")
