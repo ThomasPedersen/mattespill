@@ -16,3 +16,7 @@ def userid(request, user_id):
 		return HttpResponse("User above 10 -> Nr: %s." % user_id)
 	else:
 		return HttpResponse("User below or 10 -> Nr: %s" % user_id)
+
+def questions(request):
+    question_list = Question.objects.all()    
+    return HttpResponse(question_list)

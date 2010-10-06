@@ -8,6 +8,7 @@ urlpatterns = patterns('',
 	(r'^$', 'mattespill.main.views.index'),
 	(r'^users/$', 'mattespill.main.views.users'),
 	(r'^users/(?P<user_id>\d+)/$', 'mattespill.main.views.userid'),
+	(r'^questions/$', 'mattespill.main.views.questions'),
 	# Example:
 	# (r'^mattespill/', include('mattespill.foo.urls')),
 
