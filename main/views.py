@@ -1,5 +1,6 @@
 # Create your views here.
 
+from django.template import Context, loader
 from django.utils import simplejson
 from django.http import HttpResponse
 
@@ -12,7 +13,8 @@ def users(request):
 	return HttpResponse(json, mimetype='application/json')
 
 def userid(request, user_id):
-	if int(user_id) > 10:
-		return HttpResponse("User above 10 -> Nr: %s." % user_id)
-	else:
-		return HttpResponse("User below or 10 -> Nr: %s" % user_id)
+	t = loader.get_template('templates/userid.html')
+	c = Context({
+		'user_id': user_id,
+	})
+	return HttpResponse(t.render(c))
