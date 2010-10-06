@@ -3,6 +3,7 @@
 from django.template import Context, loader
 from django.utils import simplejson
 from django.http import HttpResponse
+from mattespill.main.models import Question
 
 def index(request):
 	return HttpResponse("Mattespill")
@@ -13,8 +14,11 @@ def users(request):
 	return HttpResponse(json, mimetype='application/json')
 
 def userid(request, user_id):
-	t = loader.get_template('templates/userid.html')
-	c = Context({
-		'user_id': user_id,
-	})
-	return HttpResponse(t.render(c))
+	if int(user_id) > 10:
+		return HttpResponse("User above 10 -> Nr: %s." % user_id)
+	else:
+		return HttpResponse("User below or 10 -> Nr: %s" % user_id)
+
+def questions(request):
+    question_list = Question.objects.all()    
+    return HttpResponse(question_list)
