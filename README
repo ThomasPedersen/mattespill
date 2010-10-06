@@ -15,3 +15,5 @@ git reset --hard origin
 For å kjøre testserver:
 python manage.py syncdb
 python manage.py runserver
+
+testasdasd
