@@ -15,6 +15,7 @@ body {
 	padding: 0;
 }
 
+
 h1 {
 	margin-top: 0;
 }
@@ -22,6 +23,9 @@ h1 {
 	margin-top: 0;
 	font-size: 150%;
 	font-weight: bold;
+}
+h1, .chest_header {
+	color: #1D4088;
 }
 
 #header a {
