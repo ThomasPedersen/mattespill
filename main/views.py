@@ -7,7 +7,20 @@ from django.shortcuts import render_to_response, get_object_or_404
 from mattespill.main.models import Question
 
 def index(request):
-	return HttpResponse("Mattespill")
+	return render_to_response('index.html', {'content': 'userid.html'})
+
+def login(request):
+	username = request.POST['username']
+	password = request.POST['password']
+	user = authenticate(username=username, password=password)
+	if user is not None:
+		if user.is_active:
+			login(request, user)
+            # Redirect to a success page.
+		else:
+			return HttpResponse("account is disabled!")
+	else:
+		return HttpResponse("invalid login")
 
 def users(request):
 	response = {'result': 'error', 'text': 'hore'}
