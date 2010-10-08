@@ -84,10 +84,11 @@ a:hover {
 	-webkit-border-bottom-right-radius: 1.5em;
 	border-bottom-right-radius: 1.5em;
 
-	-webkit-box-shadow: 0em 0em 2em #bbb;
-	/*-webkit-box-shadow: 0em 0em 2em #fff;*/
-	/*-moz-box-shadow: 10px 10px 5px #888;
-	box-shadow: 10px 10px 5px #888;*/
+	-webkit-box-shadow: 0 0 2em #bbb;
+	-moz-box-shadow: 0 0 2em #bbb;
+	box-shadow: 0 0 2em #bbb;
+
+	margin-bottom: 3em;
 }
 #right_content {
 	/*background-color: #eaeaea;
