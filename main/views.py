@@ -10,17 +10,20 @@ def index(request):
 	return render_to_response('index.html', {'content': 'userid.html'})
 
 def login(request):
-	username = request.POST['username']
-	password = request.POST['password']
-	user = authenticate(username=username, password=password)
-	if user is not None:
-		if user.is_active:
-			login(request, user)
-            # Redirect to a success page.
+	if request.method == 'POST': 
+		username = request.POST['username']
+		password = request.POST['password']
+		user = authenticate(username=username, password=password)
+		if user is not None:
+			if user.is_active:
+				login(request, user)
+	            # Redirect to a success page.
+			else:
+				return HttpResponse("account is disabled!")
 		else:
-			return HttpResponse("account is disabled!")
+			return HttpResponse("invalid login")
 	else:
-		return HttpResponse("invalid login")
+		return render_to_response('error.html', {'message' : 'Bad POST login.'})
 
 def users(request):
 	response = {'result': 'error', 'text': 'hore'}
