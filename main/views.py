@@ -3,6 +3,7 @@
 from django.template import Context, loader
 from django.utils import simplejson
 from django.http import HttpResponse
+from django.shortcuts import render_to_response, get_object_or_404
 from mattespill.main.models import Question
 
 def index(request):
@@ -19,6 +20,6 @@ def userid(request, user_id):
 	else:
 		return HttpResponse("User below or 10 -> Nr: %s" % user_id)
 
-def questions(request):
-    question_list = Question.objects.all()    
-    return HttpResponse(question_list)
+def questions(request, question_id):
+    q = get_object_or_404(Question, pk=question_id)
+    return render_to_response('question.html', {'question': q})
