@@ -140,6 +140,10 @@ img#treasure_chest {
 	font-size: 10em;
 	color: #fff;
 }
+.room_sign a {
+	color: inherit;
+	text-decoration: none;
+}
 .gold_text {
 	vertical-align: middle;
 	color: #000;

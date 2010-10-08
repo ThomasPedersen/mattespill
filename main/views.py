@@ -7,12 +7,21 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
 from mattespill.main.models import Question
 from django.contrib import auth
+from django.contrib.auth.decorators import login_required
+
+login_url = '/login/';
 
 def index(request):
 	if request.user.is_authenticated():
 		return render_to_response('home.html', {'user': request.user})
 	else:
-		return HttpResponseRedirect('/login/')
+		return HttpResponseRedirect(login_url)
+
+def room(request):
+	if request.user.is_authenticated():
+		return render_to_response('room.html', {'user': request.user})
+	else:
+		return HttpResponseRedirect(login_url)
 
 def logout(request):
 	auth.logout(request)

@@ -1,4 +1,5 @@
-{% include "inc/before.html" %}
+{% extends "outer.html" %}
+{% block content %}
 <div id="right_content">
 	<p class="chest_header">Skattekiste</p>
 	<img id="treasure_chest" src="/media/images/treasurechest.png" alt="skattekiste" />
@@ -7,12 +8,12 @@
 <div id="left_content">
 <h1>Velg ditt rom</h1>
 	<div id="room_box_container">
-		<div id="subtraction_box" class="room_box"><div class="room_sign">&minus;</div></div>
-		<div id="addition_box" class="room_box"><div class="room_sign">+</div></div>
-		<div id="division_box" class="room_box"><div class="room_sign">&divide;</div></div>
-		<div id="multiplication_box" class="room_box"><div class="room_sign">&times;</div></div>
+		<div id="subtraction_box" class="room_box"><div class="room_sign"><a href="/room/1">&minus;</a></div></div>
+		<div id="addition_box" class="room_box"><div class="room_sign"><a href="/room/0">+</a></div></div>
+		<div id="division_box" class="room_box"><div class="room_sign"><a href="/room/3">&divide;</a></div></div>
+		<div id="multiplication_box" class="room_box"><div class="room_sign"><a href="/room/2">&times;</a></div></div>
 	</div>
 </div>
 
 <p id="logout_reminder">Husk &aring; <a href="/logout">avslutte spillet</a> n&aring;r du er ferdig!</p>
-{% include "inc/after.html" %}
+{% endblock %}
