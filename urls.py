@@ -10,12 +10,9 @@ urlpatterns = patterns('',
 	(r'^users/$', 'mattespill.main.views.users'),
 	(r'^users/(?P<user_id>\d+)/$', 'mattespill.main.views.userid'),
 	(r'^questions/(?P<question_id>\d+)/$', 'mattespill.main.views.questions'),
-	(r'^login/$', 'mattespill.main.views.login'),
-	# Example:
-	# (r'^mattespill/', include('mattespill.foo.urls')),
-
-	# Uncomment the admin/doc line below to enable admin documentation:
-	# (r'^admin/doc/', include('django.contrib.admindocs.urls')),
+	#(r'^login/$', 'mattespill.main.views.login'),
+	(r'^login/$', 'django.contrib.auth.views.login'),
+	(r'^logout/$', 'mattespill.main.views.logout'),
 
 	# Uncomment the next line to enable the admin:
 	(r'^admin/', include(admin.site.urls)),

@@ -1,0 +1,18 @@
+{% include "inc/before.html" %}
+<h1>Logg inn</h1>
+<form action="{% url django.contrib.auth.views.login %}" method="post">
+	{% csrf_token %}
+	<table>
+	<tr>
+		<td>Brukernavn:</td>
+		<td><input type="text" name="username" /></td>
+	</tr>
+	<tr>
+		<td>Passord:</td>
+		<td><input type="password" name="password" /></td>
+	</tr>
+	</table>
+
+	<input type="submit" value="Logg inn" />
+</form>
+{% include "inc/after.html" %}

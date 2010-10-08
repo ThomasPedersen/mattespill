@@ -13,6 +13,7 @@ body {
 	font-family: Aller, sans-serif;
 	margin: 0;
 	padding: 0;
+	background: url(images/stripes.png);
 }
 
 
@@ -26,6 +27,9 @@ h1 {
 }
 h1, .chest_header {
 	color: #1D4088;
+	/*color: #9342ad;*/
+	/*color: #dbda00;*/
+	/*text-shadow: #aaa 1.5px 1.5px 0px;*/
 }
 
 #header a {
@@ -43,8 +47,7 @@ a:hover {
 
 #wrapper {
 	margin: 0;
-	background-color: #dadada;
-	background: url(images/stripes.png);
+	/*background-color: #dadada;*/
 }
 #header {
 	/*border-bottom: 2px solid #777;*/
@@ -66,12 +69,25 @@ a:hover {
 }
 
 #page_content {
-	border: .2em solid #ccc;
+	border: .2em solid #659b96;
 	border-top: none;
-	border-bottom: none;
 	margin: 0 8em;
 	padding: 1em;
+	padding-bottom: 2em;
 	background-color: #fff;
+
+	-moz-border-radius-bottomleft: 1.5em;
+	-webkit-bottom-left-border-radius: 1.5em;
+	border-bottom-left-radius: 1.5em;
+
+	-moz-border-radius-bottomright: 1.5em;
+	-webkit-border-bottom-right-radius: 1.5em;
+	border-bottom-right-radius: 1.5em;
+
+	-webkit-box-shadow: 0em 0em 2em #bbb;
+	/*-webkit-box-shadow: 0em 0em 2em #fff;*/
+	/*-moz-box-shadow: 10px 10px 5px #888;
+	box-shadow: 10px 10px 5px #888;*/
 }
 #right_content {
 	/*background-color: #eaeaea;

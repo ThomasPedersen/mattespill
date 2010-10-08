@@ -102,3 +102,5 @@ INSTALLED_APPS = (
 	# 'django.contrib.admindocs',
 	'mattespill.main',
 )
+
+LOGIN_REDIRECT_URL='/'
