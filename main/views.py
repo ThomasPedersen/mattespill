@@ -6,28 +6,17 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
 from mattespill.main.models import Question
+from django.contrib import auth
 
 def index(request):
 	if request.user.is_authenticated():
-		return render_to_response('home.html', {'user': request.user.username})
+		return render_to_response('home.html', {'user': request.user})
 	else:
-		return HttpResponseRedirect("/login/")
+		return HttpResponseRedirect('/login/')
 
-'''def login(request):
-	if request.method == 'POST': 
-		username = request.POST['username']
-		password = request.POST['password']
-		user = authenticate(username=username, password=password)
-		if user is None:
-			return render_to_response('error.html', {'message' : 'Du har enten skrevet feil brukernavn eller passord, eller brukeren din er ikke registrert. Kontakt lærer'})
-		else:
-			if user.is_active:
-				login(request, user)
-			# Redirect to a success page.
-			else:
-				return render_to_response('error.html', {'message' : 'Din konto er deaktivert. Kontakt lærer'})
-	else:
-		return render_to_response('login.html')'''
+def logout(request):
+	auth.logout(request)
+	return HttpResponseRedirect('/')
 
 def users(request):
 	response = {'result': 'error', 'text': 'hore'}
@@ -36,9 +25,9 @@ def users(request):
 
 def userid(request, user_id):
 	if int(user_id) > 10:
-		return HttpResponse("User above 10 -> Nr: %s." % user_id)
+		return HttpResponse('User above 10 -> Nr: %s.' % user_id)
 	else:
-		return HttpResponse("User below or 10 -> Nr: %s" % user_id)
+		return HttpResponse('User below or 10 -> Nr: %s' % user_id)
 
 def questions(request, question_id):
     q = get_object_or_404(Question, pk=question_id)
