@@ -14,14 +14,14 @@ def login(request):
 		username = request.POST['username']
 		password = request.POST['password']
 		user = authenticate(username=username, password=password)
-		if user is not None:
+		if user is None:
+			return HttpResponse("invalid login")
+		else:
 			if user.is_active:
 				login(request, user)
-	            # Redirect to a success page.
+			# Redirect to a success page.
 			else:
-				return HttpResponse("account is disabled!")
-		else:
-			return HttpResponse("invalid login")
+				return HttpResponse("Account is disabled!")
 	else:
 		return render_to_response('error.html', {'message' : 'Bad POST login.'})
 
