@@ -1,0 +1,132 @@
+@font-face {
+	font-family: Aller;
+	font-weight: normal;
+	src: url('fonts/Aller_Rg.ttf');
+}
+@font-face {
+	font-family: Aller;
+	font-weight: bold;
+	src: url('fonts/Aller_Bd.ttf');
+}
+
+body {
+	font-family: Aller, sans-serif;
+	margin: 0;
+	padding: 0;
+}
+
+h1 {
+	margin-top: 0;
+}
+.chest_header {
+	margin-top: 0;
+	font-size: 150%;
+	font-weight: bold;
+}
+
+#header a {
+	color: #fff;
+}
+
+a, a:visited a:active {
+	text-decoration: none;
+	color: #0000aa;
+}
+a:hover {
+	text-decoration: underline;
+	color: #434358;
+}
+
+#wrapper {
+	margin: 0;
+	background-color: #dadada;
+	background: url(images/stripes.png);
+}
+#header {
+	/*border-bottom: 2px solid #777;*/
+	color: #fff;
+	padding: 1em 1.5em .3em 1em;
+	font-weight: bold;
+}
+#headertable {
+	width: 100%;
+}
+#headertable td {
+	width: 33%;
+}
+.align_center {
+	text-align: center;
+}
+.align_right {
+	text-align: right;
+}
+
+#page_content {
+	border: .2em solid #ccc;
+	border-top: none;
+	border-bottom: none;
+	margin: 0 8em;
+	padding: 1em;
+	background-color: #fff;
+}
+#right_content {
+	/*background-color: #eaeaea;
+	border: .3em solid #ddd;*/
+	padding: 1em 2em;
+	text-align: center;
+	float: right;
+}
+#left_content {
+	padding: .5em 0em;
+}
+img#treasure_chest {
+	width: 10em;
+}
+#room_box_container {
+	width: 27em;
+	height: 27em;
+}
+#addition_box {
+	background-color: #76ce76;
+	border: .5em solid #60a860;
+}
+#subtraction_box {
+	background-color: #dddd51;
+	border: .5em solid #c2c247;
+	float: right;
+}
+#multiplication_box {
+	margin-top: 1em;
+	background-color: #eca657;
+	border: .5em solid #c28847;
+}
+#division_box {
+	margin-top: 1em;
+	background-color: #ec5757;
+	border: .5em solid #c94a4a;
+	float: right;
+}
+.room_box {
+	-moz-border-radius: 1.5em;
+	-webkit-border-radius: 1.5em;
+	border-radius: 1.5em;
+	width: 12em;
+	height: 12em;
+}
+.room_sign {
+	/*margin-top: -.1em;*/
+	text-align: center;
+	font-weight: bold;
+	font-size: 10em;
+	color: #fff;
+}
+.gold_text {
+	vertical-align: middle;
+	color: #000;
+	font-weight: bold;
+	text-shadow: #ff0 0 0 3px;
+}
+#logout_reminder {
+	font-size: 150%;
+	color: #4b844b;
+}
