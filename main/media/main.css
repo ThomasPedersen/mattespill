@@ -144,11 +144,22 @@ img#treasure_chest {
 	color: inherit;
 	text-decoration: none;
 }
+.gold_coins {
+	padding-bottom: .4em;
+	padding-left: .5em;
+	padding-right: .5em;
+	background-color: #e5e5e5;
+
+	-moz-border-radius: .7em;
+ 	-webkit-border-radius: .7em;
+	border-radius: .7em;
+}
 .gold_text {
-	vertical-align: middle;
-	color: #000;
+	vertical-align: bottom;
+	font-size: 140%;
+	color: #ff0;
 	font-weight: bold;
-	text-shadow: #ff0 0 0 3px;
+	text-shadow: #000 0 0 5px;
 }
 #logout_reminder {
 	font-size: 150%;
