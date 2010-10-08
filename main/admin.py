@@ -1,11 +1,11 @@
-from mattespill.main.models import Group, User, Question, Room, Result, Answer
+from mattespill.main.models import Question, Room
 
 from django.contrib import admin
 
-admin.site.register(Group)
-admin.site.register(User)
-admin.site.register(Question)
+class QuestionAdmin(admin.ModelAdmin):
+    fields = ['question', 'real_answer', 'room', 'author']
+admin.site.register(Question, QuestionAdmin)
+#admin.site.register(Result)
 admin.site.register(Room)
-admin.site.register(Result)
-admin.site.register(Answer)
+#admin.site.register(Answer)
 
