@@ -4,7 +4,7 @@ from django.db.models.signals import post_save
 
 class UserProfile(models.Model):    
     user = models.ForeignKey(User, unique=True)
-    points = models.IntegerField()
+    points = models.IntegerField(null=True)
     
     def __str__(self):
         return "%s's profile" % self.user
