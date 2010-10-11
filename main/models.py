@@ -6,7 +6,7 @@ class UserProfile(models.Model):
     user = models.ForeignKey(User, unique=True)
     points = models.IntegerField()
     
-    def __str__(self):
+    def __unicode__(self):
         return "%s's profile" % self.user
     
 def create_user_profile(sender, instance, created, **kwargs):
