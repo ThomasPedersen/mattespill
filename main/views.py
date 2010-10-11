@@ -12,10 +12,14 @@ from mattespill.main.models import Question, Room, Turn, Result
 
 login_url = '/login/'
 
+def get_user(request):
+	u = request.user
+	u.profile = request.user.get_profile()
+	return u
+
 def index(request):
 	if request.user.is_authenticated():
-		request.user.profile = request.user.get_profile()
-		return render_to_response('home.html', {'user': request.user, 'profile': request.user.get_profile()})
+		return render_to_response('home.html', {'user': get_user(request) })
 	else:
 		return HttpResponseRedirect(login_url)
 
