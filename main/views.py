@@ -26,21 +26,24 @@ def index(request):
 def room(request, room_id):
 	if request.user.is_authenticated():
 		sess_room_id = request.session.get('room_id', None)
-		# Check if a new turn needs to be created
-		r = get_object_or_404(Room, pk=room_id)
-		if not sess_room_id or sess_room_id != room_id:
-			t = Turn(date_start=datetime.now(), date_end=None, user=request.user, room=r)
+		if sess_room_id == room_id:
+			room = get_object_or_404(Room, pk=room_id)
+		else:
+			room = get_object_or_404(Room, pk=sess_room_id)
+			request.session['room_id'] = room_id
+		try:	
+			t = Turn.objects.get(room=room)
+		except Turn.DoesNotExist:
+			t = Turn(date_start=datetime.now(), date_end=None, user=request.user, room=room)
 			t.save()
 			# Fetch 10 questions for the given room
-			questions = Question.objects.filter(room=r)[:10]
+			questions = Question.objects.filter(room=room)[:10]
 			# Add Result objects (question, answer pairs) for each question
 			for q in questions:
 				result = Result(question=q, turn=t)
 				result.save()
-			# And finally set the session key for room_id
-			request.session['room_id'] = room_id
 		else:
-			t = get_object_or_404(Turn, room=r, user=request.user)
+			t = get_object_or_404(Turn, room=room, user=request.user)
 		return render_to_response('room.html', {'turn': t, 'user': request.user})
 	else:
 		return HttpResponseRedirect(login_url)
