@@ -58,7 +58,7 @@
 	<tr>
 	<!-- Change the header if user not logged in -->
 	{% if user.is_authenticated %}<td>{{ user.first_name }} {{ user.last_name }} ({{ user.username }}) 
-	{% for g in user.profile.groups %}
+	{% for g in user.get_profile.groups %}
 	- {{ g.name }}
 	{% endfor %}
 	</td>
