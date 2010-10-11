@@ -37,10 +37,7 @@
 	<table id="headertable">
 	<tr>
 	<!-- Change the header if user not logged in -->
-	{% if user.username %}<td>{{ user.first_name }} {{ user.last_name }} ({{ user.username }}) 
-	{{ for g in user.profile.groups }}
-	{{ g.name }}
-	{% endfor %}
+	{% if user.is_authenticated %}<td>{{ user.first_name }} {{ user.last_name }} ({{ user.username }}) 
 	- 1D</td>
 	<!--IF NOT HOME--><td class="align_center">Gullmynter: {{ user.get_profile.points }}</td><!--ENDIF-->
 	<td class="align_right"><a href="/logout">Avslutt spillet</a></td>

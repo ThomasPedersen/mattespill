@@ -37,7 +37,7 @@ def room(request, room_id):
 			request.session['room_id'] = room_id
 		else:
 			t = get_object_or_404(Turn, room=r, user=request.user)
-		return render_to_response('room.html', {'turn': t})
+		return render_to_response('room.html', {'turn': t, 'user': request.user})
 	else:
 		return HttpResponseRedirect(login_url)
 
