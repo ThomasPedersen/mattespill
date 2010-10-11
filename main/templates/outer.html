@@ -38,10 +38,10 @@
 	<tr>
 	<!-- Change the header if user not logged in -->
 	{% if user.username %}<td>{{ user.first_name }} {{ user.last_name }} ({{ user.username }}) 
-	{{ for g in user.profile.groups }}
-	{{ g.name }}
+	{% for g in user.profile.groups %}
+	- {{ g.name }}
 	{% endfor %}
-	- 1D</td>
+	</td>
 	<!--IF NOT HOME--><td class="align_center">Gullmynter: {{ user.get_profile.points }}</td><!--ENDIF-->
 	<td class="align_right"><a href="/logout">Avslutt spillet</a></td>
 	{% else %}<td class="align_center">Logg inn for å spille mattespillet.</td>{% endif %}
