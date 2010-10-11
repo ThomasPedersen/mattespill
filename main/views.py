@@ -13,14 +13,9 @@ import logging
 
 login_url = '/login/'
 
-def get_user(request):
-	u = request.user
-	u.profile = request.user.get_profile()
-	return u
-
 def index(request):
 	if request.user.is_authenticated():
-		return render_to_response('home.html', {'user': get_user(request) })
+		return render_to_response('home.html', {'user': request.user })
 	else:
 		return HttpResponseRedirect(login_url)
 
