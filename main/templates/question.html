@@ -1,8 +1,11 @@
+{% extends "outer.html" %}
+{% block content %}
 <h1>{{ question.question }}</h1>
 
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
-<form action="/questions/{{ question.id }}/answer/" method="post">
+<form action="/answer/{{ question.id }}/" method="post">
     <input type="text" name="answer" id="answer{{ question.id }}" />
     <input type="submit" value="Answer" />
 </form>
+{% endblock %}

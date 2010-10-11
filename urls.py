@@ -13,7 +13,7 @@ urlpatterns = patterns('',
 	#(r'^login/$', 'mattespill.main.views.login'),
 	(r'^login/$', 'django.contrib.auth.views.login'),
 	(r'^logout/$', 'mattespill.main.views.logout'),
-	(r'^room/', 'mattespill.main.views.room'),
+	(r'^room/(?P<room_id>\d+)/$', 'mattespill.main.views.room'),
 
 	# Uncomment the next line to enable the admin:
 	(r'^admin/', include(admin.site.urls)),
