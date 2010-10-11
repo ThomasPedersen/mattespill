@@ -33,7 +33,7 @@ def room(request, room_id):
 			room = get_object_or_404(Room, pk=sess_room_id)
 		request.session['room_id'] = room_id
 		try:	
-			t = Turn.objects.get(room=room)
+			t = Turn.objects.get(room=room, user=request.user)
 		except Turn.DoesNotExist:
 			t = Turn(date_start=datetime.now(), date_end=None, user=request.user, room=room)
 			t.save()
