@@ -103,9 +103,17 @@ a:hover {
 img#treasure_chest {
 	width: 10em;
 }
+#room_box_container a:hover{
+	text-decoration: none;
+}
+
 #room_box_container {
 	width: 27em;
 	height: 27em;
+}
+#room_box_container p {
+	color: #fff;
+	text-decoration: none;
 }
 #addition_box {
 	background-color: #76ce76;
