@@ -105,4 +105,4 @@ INSTALLED_APPS = (
 
 LOGIN_REDIRECT_URL='/'
 
-AUTH_PROFILE_MODULE = 'mattespill.UserProfile'
+AUTH_PROFILE_MODULE = 'main.UserProfile'
