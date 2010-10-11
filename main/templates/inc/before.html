@@ -23,7 +23,12 @@
 <div id="header">
 	<table id="headertable">
 	<tr>
-	<td>{{ user.first_name }} {{ user.last_name }} ({{ user.username }}) - 1B</td>
+	<td>
+{% if user.is_authenticated() %}
+	{{ user.first_name }} {{ user.last_name }} ({{ user.username }}) - 1C
+{% endif %}
+hhh
+</td>
 	<!--IF NOT HOME--><td class="align_center">Gullmynter: 34</td><!--ENDIF-->
 	<td class="align_right"><a href="/logout">Avslutt spillet</a></td>
 	</tr>

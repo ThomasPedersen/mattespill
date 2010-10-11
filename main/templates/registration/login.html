@@ -1,5 +1,9 @@
 {% extends "outer.html" %}
 {% block content %}
+{% if user.username %}
+<h1>Allerede logget inn</h1>
+<p>Trykk <a href="/">her</a> for å gå til mattespillet.</p>
+{% else %}
 <h1>Logg inn</h1>
 <form action="{% url django.contrib.auth.views.login %}" method="post">
 	{% csrf_token %}
@@ -16,4 +20,5 @@
 
 	<input type="submit" value="Logg inn" />
 </form>
+{% endif %}
 {% endblock %}
