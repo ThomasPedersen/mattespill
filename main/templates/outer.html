@@ -7,7 +7,18 @@
 
 	<style type="text/css">
 	#header {
-		background-color: #627AAD;
+	
+	{% if turn.room.id == 1 %} 
+		background-color: #76ce76;
+	{% else %} {% if turn.room.id == 2 %}
+		background-color: #dddd51;
+	{% else %} {% if turn.room.id == 3 %}
+		background-color: #eca657;
+	{% else %} {% if turn.room.id == 4 %}
+		background-color: #ec5757;	
+	{% else %}	
+		background-color: #627AAD;			
+	{% endif %}{% endif %}{% endif %}{% endif %}
 		border-bottom: .15em solid #1D4088;
 		text-shadow: #1D4088 1.5px 1.5px 1.5px;
 	}
@@ -19,6 +30,8 @@
 	<script src="/media/main.js" type="text/javascript"></script>
 </head>
 <body>
+
+
 <div id="wrapper">
 <div id="header">
 	<table id="headertable">
@@ -29,7 +42,7 @@
 	{{ g.name }}
 	{% endfor %}
 	- 1D</td>
-	<!--IF NOT HOME--><td class="align_center">Gullmynter: 34</td><!--ENDIF-->
+	<!--IF NOT HOME--><td class="align_center">Gullmynter: {{ user.get_profile.points }}</td><!--ENDIF-->
 	<td class="align_right"><a href="/logout">Avslutt spillet</a></td>
 	{% else %}<td class="align_center">Logg inn for å spille mattespillet.</td>{% endif %}
 	</tr>
