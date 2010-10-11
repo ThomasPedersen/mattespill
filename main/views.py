@@ -9,6 +9,7 @@ from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from mattespill.main.models import Question, Room, Turn, Result
+import logging
 
 login_url = '/login/'
 
@@ -26,11 +27,11 @@ def index(request):
 def room(request, room_id):
 	if request.user.is_authenticated():
 		sess_room_id = request.session.get('room_id', None)
-		if sess_room_id == room_id:
+		if not sess_room_id or sess_room_id != room_id:
 			room = get_object_or_404(Room, pk=room_id)
 		else:
 			room = get_object_or_404(Room, pk=sess_room_id)
-			request.session['room_id'] = room_id
+		request.session['room_id'] = room_id
 		try:	
 			t = Turn.objects.get(room=room)
 		except Turn.DoesNotExist:
