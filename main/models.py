@@ -43,7 +43,7 @@ class Turn(models.Model):
     # results
 
     def __unicode__(self):
-        return '[%s] %s' % (date_start, room)
+        return '[%s] %s' % (self.date_start, self.room)
 
 class Result(models.Model):
     question = models.ForeignKey(Question)
