@@ -20,9 +20,9 @@ def index(request):
 
 def room(request, room_id):
 	if request.user.is_authenticated():
-		turn_id = request.session.get('turn_id', None)
-		# Create a new Turn if none currently exists
-		if not turn_id:
+		sess_room_id = request.session.get('room_id', None)
+		# Check if a new turn needs to be created
+		if not sess_room_id or sess_room_id != room_id:
 			r = get_object_or_404(Room, pk=room_id)
 			t = Turn(date_start=datetime.now(), date_end=None, user=request.user, room=r)
 			t.save()
@@ -33,9 +33,9 @@ def room(request, room_id):
 				result = Result(question=q, turn=t)
 				result.save()
 			# And finally set the session key for turn_id
-			request.session['turn_id'] = t.id
+			request.session['room_id'] = room_id
 		else:
-			t = get_object_or_404(Turn, pk=turn_id)
+			t = get_object_or_404(Turn, room_id=room_id)
 		return render_to_response('room.html', {'turn': t})
 	else:
 		return HttpResponseRedirect(login_url)
