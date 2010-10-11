@@ -1,11 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-
 class UserProfile(models.Model):
     points = models.IntegerField()
     user = models.ForeignKey(User, unique=True)    
-    
 
 class Room(models.Model):
     name = models.CharField(max_length=50)
@@ -21,27 +19,24 @@ class Question(models.Model):
     real_answer = models.CharField(max_length=100)
     author = models.ForeignKey(User)
     room = models.ForeignKey(Room)
+    points = models.IntegerField()
 
     def __unicode__(self):
         return self.question
 
-class Report(models.Model):
+class Turn(models.Model):
     date_start = models.DateTimeField()
-    date_end = models.DateTimeField()
+    date_end = models.DateTimeField(null=True)
     user = models.ForeignKey(User)
+    room = models.ForeignKey(Room)
+    # Use result_set here to access associated
+    # results
 
     def __unicode__(self):
-        return '[%s] %s' % (date_end, user)
+        return '[%s] %s' % (date_start, room)
 
 class Result(models.Model):
-    # Assuming a set of questions are to be generated randomly
-    # each turn, we need to maintain an index here so that
-    # results can be sorted
-    question_index = models.IntegerField()
     question = models.ForeignKey(Question)
-    answer = models.CharField(max_length=200)
-    report = models.ForeignKey(Report)
-
-    def __unicode__(self):
-        return self.user
+    answer = models.CharField(max_length=200, blank=True)
+    turn = models.ForeignKey(Turn)
 
