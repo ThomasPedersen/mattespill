@@ -49,27 +49,16 @@ def logout(request):
 	auth.logout(request)
 	return HttpResponseRedirect('/')
 
-def users(request):
-	response = {'result': 'error', 'text': 'hore'}
-	json = simplejson.dumps(response)
-	return HttpResponse(json, mimetype='application/json')
-
-def userid(request, user_id):
-	if int(user_id) > 10:
-		return HttpResponse('User above 10 -> Nr: %s.' % user_id)
-	else:
-		return HttpResponse('User below or 10 -> Nr: %s' % user_id)
-
 def questions(request, question_id):
 	q = get_object_or_404(Question, pk=question_id)
 	return render_to_response('question.html', {'question': q})
 
-def answer(request, result_id):
+def answer(request, room_id, result_id):
 	if request.user.is_authenticated():
 		# If the user hasn't started his turn yet, we create a new
 		# Turn object and populate it with questions
-		if request.session.get('turn_id', None):
-			t = Turn(date_start=datetime.now(), date_end=None, user=request.user, room=None)
-		r = get_object_or_404(Result, pk=result_id)
+		if request.session.get('room_id', None):
+			r = get_object_or_404(Room, pk=room_id)
+			t = get_object_or_404(Turn, room=r, user=request.user)
 		return render_to_respone('answer.html', {'result': q})
 

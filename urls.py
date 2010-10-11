@@ -7,10 +7,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
 	(r'^$', 'mattespill.main.views.index'),
-	(r'^users/$', 'mattespill.main.views.users'),
-	(r'^users/(?P<user_id>\d+)/$', 'mattespill.main.views.userid'),
 	(r'^questions/(?P<question_id>\d+)/$', 'mattespill.main.views.questions'),
-	#(r'^login/$', 'mattespill.main.views.login'),
 	(r'^login/$', 'django.contrib.auth.views.login'),
 	(r'^logout/$', 'mattespill.main.views.logout'),
 	(r'^room/(?P<room_id>\d+)/$', 'mattespill.main.views.room'),
