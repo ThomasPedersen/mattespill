@@ -1,6 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
+class UserProfile(models.Model):
+    points = models.IntegerField()
+    user = models.ForeignKey(User, unique=True)    
+    
+
 class Room(models.Model):
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=300)
