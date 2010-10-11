@@ -1,4 +1,4 @@
-from mattespill.main.models import Question, Room, Turn, Result
+from mattespill.main.models import Question, Room, Turn, Result, UserProfile
 
 from django.contrib import admin
 
@@ -8,4 +8,5 @@ admin.site.register(Question, QuestionAdmin)
 admin.site.register(Result)
 admin.site.register(Room)
 admin.site.register(Turn)
+admin.site.register(UserProfile)
 
