@@ -54,15 +54,14 @@ def question(request):
 	if request.user.is_authenticated():
 		room_id = request.session.get('room_id', None)
 		if room_id:
-			r = get_object_or_404(Room, pk=room_id)
-			t = get_object_or_404(Turn, room=r, user=request.user)
+			t = get_object_or_404(Turn, room=room_id, user=request.user)
 			try:
 				# The Meta.ordering defined in model will sort
 				# the result ascending on Result.index
-				result = Result.objects.filter(turn=t, answer='')[:1]
-				return HttpResponse(serializers.serialize('json', (result[0].question, ), fields=('question')))
-			except Turn.DoesNotExist:
-				return HttpResponse('wtf')
+				r = Result.objects.filter(turn=t, answer='')[:1]
+				return HttpResponse(serializers.serialize('json', (r[0].question, ), fields=('question')))
+			except Result.DoesNotExist:
+				pass
 
 def answer(request, result_id):
 	if request.user.is_authenticated():

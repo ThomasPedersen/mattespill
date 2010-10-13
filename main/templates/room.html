@@ -15,7 +15,7 @@
 
 {% block content %}
 <h1>Du befinner deg i {{ turn.room }}srommet</h1>
-<p>Dette rommet best&aring;r av 10 oppgaver.</p>
+<p>Dette rommet best&aring;r av {{ turn.result_set.all|length }} oppgaver.</p>
 <p class="start_button_container"><span class="start_button">Start oppgavene!</span></p>
 <p class="back_button"><a href="/">G&aring; tilbake</a></p>
 {% endblock %}
