@@ -1,11 +1,11 @@
 {% extends "outer.html" %}
 {% block content %}
-<h1>{{ question.question }}</h1>
+<h1>Sp&oslash;rsm&aring;l {{ result.index }} av {{ num_questions }}</h1>
 
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+<p>{{ result.question.question}}</p>
 
-<form action="/answer/{{ question.id }}/" method="post">
-	<input type="text" name="answer" id="answer{{ question.id }}" />
-	<input type="submit" value="Answer" />
+<form action="question" method="post">
+	<input type="text" name="answer" />
+	<p class="start_button_container"><span class="simple_button">Send svar / neste sp&oslash;rsm&aring;l</span></p></p>
 </form>
 {% endblock %}

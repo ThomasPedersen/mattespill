@@ -172,7 +172,7 @@ img#treasure_chest {
 	font-size: 150%;
 	color: #4b844b;
 }
-.start_button {
+.simple_button {
 	cursor: pointer;
 	padding: .7em;
 	background-color: #627AAD;
