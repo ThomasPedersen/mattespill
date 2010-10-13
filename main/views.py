@@ -70,12 +70,13 @@ def answer(request):
 		if room_id:
 			t = get_object_or_404(Turn, room=room_id, user=request.user)
 			try:	
-				result = Result.objects.filter(turn=t, answer='')[:1]
-				next_index = result[0].index + 1
+				r = Result.objects.filter(turn=t, answer='')[:1]
+				result = r[0]
+				next_index = result.index + 1
 				next_question = Result.objects.filter(turn=t, index=next_index)[:1]
-				correct = given_answer == result[0].question.real_answer
-				result[0].answer = given_answer
-				result[0].save()
+				correct = given_answer == result.question.real_answer
+				result.answer = given_answer
+				result.save()
 				# XXX: Add points to user and handle out of range indexes
 				return HttpResponse(json.dumps((correct, next_index, next_question[0].question.question)))
 			except Result.DoesNotExist:
