@@ -6,21 +6,25 @@ $(function() {
 			dataType: 'json',
 			data: {answer: $('input[name=answer]').val()},
 			success: function(data, textStatus) {
-				$('#question_index').text(data.next_index);
-				$('#question_text').text(data.next_question);
-				
-				if (data.correct) {
-					$('#wrong_answer').hide();
-					$('#correct_answer').fadeIn();
+				if (data.done) {
+					document.location.href = '/room/'; // FIXME
 				}
 				else {
-					$('#correct_answer').hide();
-					$('#wrong_answer').fadeIn();
+					$('#question_index').text(data.next_index);
+					$('#question_text').text(data.next_question);
+					
+					if (data.correct) {
+						$('#wrong_answer').hide();
+						$('#correct_answer').fadeIn();
+					}
+					else {
+						$('#correct_answer').hide();
+						$('#wrong_answer').fadeIn();
+					}
 				}
-				
 			},
-			error: function(XMLHttpRequest, textStatus, errorThrown) {
-				alert(textStatus + ' : ' + errorThrown);
+			error: function(XMLHttpRequest, textStatus) {
+				alert('Det oppstod en feil');
 			}
 		});
 	});

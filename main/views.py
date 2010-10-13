@@ -16,7 +16,7 @@ login_url = '/login/'
 
 def index(request):
 	if request.user.is_authenticated():
-		return render_to_response('home.html', {'user': request.user })
+		return render_to_response('home.html', {'user': request.user, 'home': True})
 	else:
 		return HttpResponseRedirect(login_url)
 
@@ -27,8 +27,9 @@ def room(request, room_id):
 			room = get_object_or_404(Room, pk=room_id)
 		else:
 			room = get_object_or_404(Room, pk=sess_room_id)
+
 		request.session['room_id'] = room_id
-		try:	
+		try:
 			t = Turn.objects.get(room=room, user=request.user)
 		except Turn.DoesNotExist:
 			t = Turn(date_start=datetime.now(), date_end=None, user=request.user, room=room)
@@ -62,6 +63,8 @@ def question(request):
 				return render_to_response('question.html', {'user': request.user,'turn': t, 'result': result[0], 'num_questions': num_questions, 'room_id': room_id})
 			except Result.DoesNotExist:
 				pass
+	else:
+		return HttpResponseRedirect(login_url)
 
 def answer(request):
 	if request.user.is_authenticated() and request.method == 'POST':
@@ -81,4 +84,5 @@ def answer(request):
 				return HttpResponse(json.dumps({'correct': correct, 'next_index': next_index, 'next_question': next_question[0].question.question}))
 			except Result.DoesNotExist:
 				return HttpResponse('wtf')
-			
+	else:
+		return HttpResponseRedirect(login_url)
