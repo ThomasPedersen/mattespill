@@ -63,6 +63,19 @@ def question(request):
 			except Result.DoesNotExist:
 				pass
 
+def cur_question(request):
+	if request.user.is_authenticated():
+		room_id = request.session.get('room_id', None)
+		if room_id:
+			r = get_object_or_404(Room, pk=room_id)
+			t = get_object_or_404(Turn, room=r, user=request.user)
+			try:
+				result = Result.objects.filter(turn=t, answer='')[:1]
+				num_questions = Result.objects.filter(turn=t).count()
+				return render_to_response('question.html', {'user': request.user,'turn': t, 'result': result[0], 'num_questions': num_questions})
+			except Turn.DoesNotExist:
+				pass
+
 def answer(request, result_id):
 	if request.user.is_authenticated():
 		room_id = request.session.get('room_id', None)
