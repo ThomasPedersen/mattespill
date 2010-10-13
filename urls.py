@@ -7,10 +7,12 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
 	(r'^$', 'mattespill.main.views.index'),
-	(r'^questions/(?P<question_id>\d+)/$', 'mattespill.main.views.questions'),
+	#(r'^question/(?P<question_id>\d+)/$', 'mattespill.main.views.questions'),
 	(r'^login/$', 'django.contrib.auth.views.login'),
 	(r'^logout/$', 'mattespill.main.views.logout'),
 	(r'^room/(?P<room_id>\d+)/$', 'mattespill.main.views.room'),
+	(r'^question/$', 'mattespill.main.views.question'),
+	(r'^answer/(?P<result_id>\d+)/$', 'mattespill.main.views.answer'),
 
 	# Uncomment the next line to enable the admin:
 	(r'^admin/', include(admin.site.urls)),

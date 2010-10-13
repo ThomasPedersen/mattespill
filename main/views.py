@@ -7,9 +7,11 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
+from django.core import serializers
 from datetime import datetime
 from mattespill.main.models import Question, Room, Turn, Result
 import logging
+
 
 login_url = '/login/'
 
@@ -34,12 +36,12 @@ def room(request, room_id):
 			t.save()
 			# Fetch 10 questions for the given room
 			questions = Question.objects.filter(room=room)[:10]
-			# Add Result objects (question, answer pairs) for each question
+			# Add Result objects (question and answer pairs) for each question
+			i = 1 # Sequence number for each question
 			for q in questions:
-				result = Result(question=q, turn=t)
+				result = Result(question=q, turn=t, index=i)
 				result.save()
-		else:
-			t = get_object_or_404(Turn, room=room, user=request.user)
+				i += 1
 		return render_to_response('room.html', {'turn': t, 'user': request.user})
 	else:
 		return HttpResponseRedirect(login_url)
@@ -48,16 +50,28 @@ def logout(request):
 	auth.logout(request)
 	return HttpResponseRedirect('/')
 
-def questions(request, question_id):
-	q = get_object_or_404(Question, pk=question_id)
-	return render_to_response('question.html', {'question': q})
-
-def answer(request, room_id, result_id):
+def question(request):
 	if request.user.is_authenticated():
-		# If the user hasn't started his turn yet, we create a new
-		# Turn object and populate it with questions
-		if request.session.get('room_id', None):
+		room_id = request.session.get('room_id', None)
+		if room_id:
 			r = get_object_or_404(Room, pk=room_id)
 			t = get_object_or_404(Turn, room=r, user=request.user)
-		return render_to_respone('answer.html', {'result': q})
+			try:
+				# The Meta.ordering defined in model will sort
+				# the result ascending on Result.index
+				result = Result.objects.filter(turn=t, answer='')[:1]
+				return HttpResponse(serializers.serialize('json', (result[0].question, ), fields=('question')))
+			except Turn.DoesNotExist:
+				return HttpResponse('wtf')
+
+def answer(request, result_id):
+	if request.user.is_authenticated():
+		room_id = request.session.get('room_id', None)
+		if room_id:
+			#r = get_object_or_404(Room, pk=room_id)
+			#t = get_object_or_404(Turn, room_id=room_id, user=request.user)
+			#r = get_object_or_404(Result, pk=result_id)
+			#r.answer = request.POST['answer']
+			#r.save()
+			pass
 
