@@ -101,7 +101,7 @@ a:hover {
 img#treasure_chest {
 	width: 10em;
 }
-#room_box_container a:hover{
+#room_box_container a:hover {
 	text-decoration: none;
 }
 
@@ -171,4 +171,19 @@ img#treasure_chest {
 #logout_reminder {
 	font-size: 150%;
 	color: #4b844b;
+}
+.start_button {
+	cursor: pointer;
+	padding: .7em;
+	background-color: #627AAD;
+	color: #fff;
+	font-weight: bold;
+
+	/*-webkit-box-shadow: 0 0 2em #bbb;
+	-moz-box-shadow: 0 0 2em #bbb;
+	box-shadow: 0 0 2em #bbb;*/
+
+	-moz-border-radius: .7em;
+ 	-webkit-border-radius: .7em;
+	border-radius: .7em;
 }
