@@ -59,7 +59,7 @@ def question(request):
 				# the result ascending on Result.index
 				result = Result.objects.filter(turn=t, answer='')[:1]
 				num_questions = Result.objects.filter(turn=t).count()
-				return render_to_response('question.html', {'user': request.user,'turn': t, 'result': result[0], 'num_questions': num_questions})
+				return render_to_response('question.html', {'user': request.user,'turn': t, 'result': result[0], 'num_questions': num_questions, 'room_id': room_id})
 			except Result.DoesNotExist:
 				pass
 

@@ -1,5 +1,6 @@
 $(function() {
 	$('.simple_button').click(function() {
+		alert($('input[name=answer]').val());
 		$.ajax({
 			type: 'POST',
 			url: '/answer/',
