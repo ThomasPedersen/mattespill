@@ -77,7 +77,7 @@ def answer(request):
 				result[0].answer = given_answer
 				result[0].save()
 				# XXX: Add points to user and handle out of range indexes
-				return HttpResponse(json.dumps((correct, next_index, next_question[0].question.question)))
+				return HttpResponse(json.dumps({'correct': correct, 'next_index': next_index, 'next_question': next_question[0].question.question}))
 			except Result.DoesNotExist:
 				return HttpResponse('wtf')
 			

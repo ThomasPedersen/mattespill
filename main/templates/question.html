@@ -2,19 +2,35 @@
 
 {% block head %}
 <style type="text/css">
+#correct_answer {
+	background-color: #afa;
+}
+#wrong_answer {
+	background-color: #fcc;
+}
+#correct_answer, #wrong_answer {
+	display: none;
+	padding: .3em;
+	-moz-border-radius: .3em;
+ 	-webkit-border-radius: .3em;
+	border-radius: .3em;
+}
 </style>
 <script src="/media/question.js" type="text/javascript"></script>
 {% endblock %}
 
 
 {% block content %}
-<h1>Sp&oslash;rsm&aring;l {{ result.index }} av {{ num_questions }}</h1>
+<h1>Sp&oslash;rsm&aring;l <span id="question_index">{{ result.index }}</span> av {{ num_questions }}</h1>
 
-<p>{{ result.question.question}}</p>
+<p id="correct_answer">Riktig svar p&aring; forrige oppgave</p>
+<p id="wrong_answer">Feil svar p&aring; forrige oppgave</p>
+
+<p id="question_text">{{ result.question.question}}</p>
 
 <form action="question" method="post">
 	<input type="text" name="answer" />
-	<p class="start_button_container"><span class="simple_button">Send svar / neste sp&oslash;rsm&aring;l</span></p></p>
+	<p class="start_button_container"><span class="simple_button">Neste sp&oslash;rsm&aring;l</span></p></p>
 </form>
 
 <p class="back_button"><a href="/room/{{ room_id }}/">G&aring; tilbake til rommet</a></p>
