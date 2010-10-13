@@ -49,7 +49,10 @@ class Turn(models.Model):
 		return '%s | %s | %s' % (self.user.username, self.date_start, self.room)
 
 class Result(models.Model):
+	index = models.IntegerField()
 	question = models.ForeignKey(Question)
 	answer = models.CharField(max_length=200, blank=True)
 	turn = models.ForeignKey(Turn)
-
+	# Order by index field
+	class Meta:
+		ordering = ('index', )
