@@ -187,3 +187,6 @@ img#treasure_chest {
  	-webkit-border-radius: .7em;
 	border-radius: .7em;
 }
+.back_button {
+	margin-top: 4em;
+}
