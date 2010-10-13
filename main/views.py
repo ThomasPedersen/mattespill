@@ -10,8 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.core import serializers
 from datetime import datetime
 from mattespill.main.models import Question, Room, Turn, Result
-import logging
-
+import json
 
 login_url = '/login/'
 
@@ -65,18 +64,20 @@ def question(request):
 				pass
 
 def answer(request):
-	if request.user.is_authenticated():
+	if request.user.is_authenticated() and request.method == 'POST':
 		room_id = request.session.get('room_id', None)
 		given_answer = request.POST['answer']
 		if room_id:
 			t = get_object_or_404(Turn, room=room_id, user=request.user)
 			try:	
 				result = Result.objects.filter(turn=t, answer='')[:1]
-				next_index = result.index + 1
+				next_index = result[0].index + 1
 				next_question = Result.objects.filter(turn=t, index=next_index)[:1]
-				correct = given_answer == result.question.real_answer
+				correct = given_answer == result[0].question.real_answer
+				result[0].answer = given_answer
+				result[0].save()
 				# XXX: Add points to user and handle out of range indexes
-				return HttpResponse(serializers.serialize('json', (next_question[0].question, correct), fields=('question')))
+				return HttpResponse(json.dumps((correct, next_index, next_question[0].question.question)))
 			except Result.DoesNotExist:
-				pass
+				return HttpResponse('wtf')
 			
