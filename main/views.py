@@ -17,7 +17,9 @@ login_url = '/login/'
 
 def index(request):
 	if request.user.is_authenticated():
-		return render_to_response('home.html', {'user': request.user, 'home': True})
+		rooms = Room.objects.all()
+		return render_to_response('home.html', {'user': request.user, 'home': True, \
+				'rooms': rooms})
 	else:
 		return HttpResponseRedirect(login_url)
 
