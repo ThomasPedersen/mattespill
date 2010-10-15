@@ -30,6 +30,11 @@ def room(request, room_id):
 			room = get_object_or_404(Room, pk=room_id)
 		else:
 			room = get_object_or_404(Room, pk=sess_room_id)
+	
+		# If user does not have enough points to access room,
+		# we redirect to index 
+		if request.user.get_profile().points < room.required_points:
+			return HttpResponseRedirect('/')
 
 		request.session['room_id'] = room_id
 		turn_exists = False
