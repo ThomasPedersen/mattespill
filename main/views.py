@@ -59,8 +59,11 @@ def question(request):
 				# The Meta.ordering defined in model will sort
 				# the result ascending on Result.index
 				result = Result.objects.filter(turn=t, answer='')[:1]
+				if not result:
+					return render_to_response('room.html', {'turn': t, 'user': request.user})
 				num_questions = Result.objects.filter(turn=t).count()
-				return render_to_response('question.html', {'user': request.user,'turn': t, 'result': result[0], 'num_questions': num_questions, 'room_id': room_id})
+				return render_to_response('question.html', {'user': request.user,'turn': t, 'result': result[0], \
+						'num_questions': num_questions, 'room_id': room_id})
 			except Result.DoesNotExist:
 				pass
 	else:
@@ -70,8 +73,9 @@ def answer(request):
 	if request.user.is_authenticated() and request.method == 'POST':
 		room_id = request.session.get('room_id', None)
 		if room_id and 'answer' in request.POST:
-			given_answer = request.POST['answer']
-			t = get_object_or_404(Turn, room=room_id, user=request.user)
+			given_answer = request.POST['answer'].strip()
+			user = request.user
+			t = get_object_or_404(Turn, room=room_id, user=user)
 			try:	
 				r = Result.objects.filter(turn=t, answer='')
 				count = r.count()
@@ -84,11 +88,13 @@ def answer(request):
 					question = None
 				correct = given_answer == result.question.real_answer
 				if correct:
-					request.user.get_profile().points += result.question.points
+					# Give user some points
+					user.get_profile().points += result.question.points
+					user.get_profile().save()
 				result.answer = given_answer
 				result.save()
 				return HttpResponse(json.dumps({'correct': correct, 'index': index, \
-						'question': question, 'points': request.user.get_profile().points}))
+						'question': question, 'points': user.get_profile().points}))
 			except Result.DoesNotExist:
 				return HttpResponse('wtf')
 	else:
