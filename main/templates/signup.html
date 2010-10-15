@@ -1,0 +1,13 @@
+{% extends "outer.html" %}
+{% block content %}
+{% if user.username %}
+<h1>Allerede logget inn</h1>
+<p>Trykk <a href="/">her</a> for å gå til mattespillet.</p>
+{% else %}
+<h1>Registrer bruker</h1>	
+		<form action="/signup/" method="post">{% csrf_token %}
+			{{ form.as_p }}
+			<input type="submit" value="Submit" />
+		</form>
+{% endif %}
+{% endblock %}
