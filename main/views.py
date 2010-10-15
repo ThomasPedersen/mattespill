@@ -31,6 +31,7 @@ def room(request, room_id):
 		request.session['room_id'] = room_id
 		try:
 			t = Turn.objects.get(room=room, user=request.user, complete=False)
+			previous_turns = Turn.objects.filter(room=room, user=request.user, complete=True).all()
 		except Turn.DoesNotExist:
 			t = Turn(date_start=datetime.now(), date_end=None, user=request.user, room=room)
 			t.save()
@@ -42,7 +43,7 @@ def room(request, room_id):
 				result = Result(question=q, turn=t, index=i)
 				result.save()
 				i += 1
-		return render_to_response('room.html', {'turn': t, 'user': request.user})
+		return render_to_response('room.html', {'turn': t, 'user': request.user, 'previous_turns': previous_turn})
 	else:
 		return HttpResponseRedirect(login_url)
 
@@ -92,9 +93,13 @@ def answer(request):
 				if correct:
 					# Give user some points
 					user.get_profile().points += result.question.points
+					t.total_points += result.question.points
 				else:
 					# For wrong answer users looses question points / 2
-					user.get_profile().points -= result.question.points / 2
+					penalty = result.question.points / 2
+					user.get_profile().points -= penalty
+					t.total_points -= penalty
+				t.save()
 				user.get_profile().save()
 				result.answer = given_answer
 				result.save()

@@ -44,6 +44,7 @@ class Turn(models.Model):
 	user = models.ForeignKey(User)
 	room = models.ForeignKey(Room)
 	complete = models.BooleanField(default=False)
+	total_points = models.IntegerField(default=0)
 	# Use result_set here to access associated
 	# results
 
