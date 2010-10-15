@@ -114,20 +114,18 @@ def answer(request):
 	else:
 		return HttpResponseRedirect(login_url)
 
+
 def signup(request):
 	if request.method == 'POST':
 		form = SignupForm(data=request.POST)
 		if form.is_valid():
-			form.save();			
-			return HttpResponseRedirect("/success/")
+			form.save();
+			return HttpResponseRedirect('/')
 		else:
 			form = SignupForm()
-		return render_to_response('signup.html', 
-								{'form': form}, 
-								context_instance=RequestContext(request))		
-	else:
+		return render_to_response('signup.html', {'form': form}, context_instance=RequestContext(reqest))
+	else: 
 		form = SignupForm()
-	return render_to_response('signup.html', 
-							{'form': form}, 
-							context_instance=RequestContext(request))
+		return render_to_response('signup.html', {'form': form}, context_instance=RequestContext(request))
+
 		
