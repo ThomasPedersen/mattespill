@@ -21,6 +21,7 @@ post_save.connect(create_user_profile, sender=User)
 class Room(models.Model):
 	name = models.CharField(max_length=50)
 	description = models.CharField(max_length=300)
+	required_points = models.IntegerField()
 
 	def __unicode__(self):
 		return self.name
@@ -42,6 +43,7 @@ class Turn(models.Model):
 	date_end = models.DateTimeField(null=True)
 	user = models.ForeignKey(User)
 	room = models.ForeignKey(Room)
+	complete = models.BooleanField(default=False)
 	# Use result_set here to access associated
 	# results
 

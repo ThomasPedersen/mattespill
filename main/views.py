@@ -30,7 +30,7 @@ def room(request, room_id):
 
 		request.session['room_id'] = room_id
 		try:
-			t = Turn.objects.get(room=room, user=request.user)
+			t = Turn.objects.get(room=room, user=request.user, complete=False)
 		except Turn.DoesNotExist:
 			t = Turn(date_start=datetime.now(), date_end=None, user=request.user, room=room)
 			t.save()
@@ -54,7 +54,7 @@ def question(request):
 	if request.user.is_authenticated():
 		room_id = request.session.get('room_id', None)
 		if room_id:
-			t = get_object_or_404(Turn, room=room_id, user=request.user)
+			t = get_object_or_404(Turn, room=room_id, user=request.user, complete=False)
 			try:
 				# The Meta.ordering defined in model will sort
 				# the result ascending on Result.index
@@ -75,7 +75,7 @@ def answer(request):
 		if room_id and 'answer' in request.POST:
 			given_answer = request.POST['answer'].strip()
 			user = request.user
-			t = get_object_or_404(Turn, room=room_id, user=user)
+			t = get_object_or_404(Turn, room=room_id, user=user, complete=False)
 			try:	
 				r = Result.objects.filter(turn=t, answer='')
 				count = r.count()
@@ -86,11 +86,16 @@ def answer(request):
 				else:
 					index = -1 # No more questions
 					question = None
+					t.complete = True
+					t.save()
 				correct = given_answer == result.question.real_answer
 				if correct:
 					# Give user some points
 					user.get_profile().points += result.question.points
-					user.get_profile().save()
+				else:
+					# For wrong answer users looses question points / 2
+					user.get_profile().points -= result.question.points / 2
+				user.get_profile().save()
 				result.answer = given_answer
 				result.save()
 				return HttpResponse(json.dumps({'correct': correct, 'index': index, \
@@ -99,3 +104,4 @@ def answer(request):
 				return HttpResponse('wtf')
 	else:
 		return HttpResponseRedirect(login_url)
+
