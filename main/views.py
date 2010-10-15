@@ -66,19 +66,26 @@ def question(request):
 def answer(request):
 	if request.user.is_authenticated() and request.method == 'POST':
 		room_id = request.session.get('room_id', None)
-		given_answer = request.POST['answer']
-		if room_id:
+		if room_id and 'answer' in request.POST:
+			given_answer = request.POST['answer']
 			t = get_object_or_404(Turn, room=room_id, user=request.user)
 			try:	
-				r = Result.objects.filter(turn=t, answer='')[:1]
+				r = Result.objects.filter(turn=t, answer='')
+				count = r.count()
 				result = r[0]
-				next_index = result.index + 1
-				next_question = Result.objects.filter(turn=t, index=next_index)[:1]
+				if result.index <= count:
+					index = result.index + 1
+					question = Result.objects.get(turn=t, index=index).question.question
+				else:
+					index = -1 # No more questions
+					question = None
 				correct = given_answer == result.question.real_answer
+				if correct:
+					request.user.get_profile().points += result.question.points
 				result.answer = given_answer
 				result.save()
-				# XXX: Add points to user and handle out of range indexes
-				return HttpResponse(json.dumps({'correct': correct, 'next_index': next_index, 'next_question': next_question[0].question.question}))
+				return HttpResponse(json.dumps({'correct': correct, 'index': index, \
+						'question': question}))
 			except Result.DoesNotExist:
 				return HttpResponse('wtf')
 			
