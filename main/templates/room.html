@@ -11,6 +11,9 @@
 #toggle_table {
 	cursor: pointer;
 }
+#previous_turns table tr.most_points td {
+	background-color: #aaffaa;
+}
 </style>
 <script src="/media/room.js" type="text/javascript"></script>
 {% endblock %}
@@ -40,7 +43,8 @@ Fortsett ditt fors&oslash;k
 	<th>Poengresultat</th>
 </tr>
 {% for o in previous_turns %}
-<tr>
+
+<tr{% if forloop.first %} class="most_points"{% endif %}>
 	<td>{{ o.date_start }}</td>
 	<td>{{ o.total_points }}</td>
 </tr>
