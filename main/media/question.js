@@ -27,7 +27,7 @@ $(function() {
 					$('#finished_wrapper').show();
 				}
 				else {
-					$('input[name=answer]').val('');
+					$('input[name=answer]').val('').focus();
 					$('#question_index').text(data.index);
 					$('#question_text').text(data.question);
 				}
