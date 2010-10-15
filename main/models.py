@@ -36,7 +36,7 @@ class Question(models.Model):
 	points = models.IntegerField()
 
 	def __unicode__(self):
-		return self.question
+		return '[%s] %s' % (self.room, self.question)
 
 class Turn(models.Model):
 	date_start = models.DateTimeField()
@@ -49,7 +49,7 @@ class Turn(models.Model):
 	# results
 
 	def __unicode__(self):
-		return '%s | %s | %s' % (self.user.username, self.date_start, self.room)
+		return '[%s, %s] %s' % (self.room, self.date_start.strftime('%Y-%m-%d %H:%M:%S'), self.user.username)
 
 class Result(models.Model):
 	index = models.IntegerField()

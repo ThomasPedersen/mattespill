@@ -44,8 +44,8 @@ def room(request, room_id):
 		except Turn.DoesNotExist:
 			t = Turn(date_start=datetime.now(), date_end=None, user=request.user, room=room)
 			t.save()
-			# Fetch 10 questions for the given room
-			questions = Question.objects.filter(room=room)[:10]
+			# Fetch 10 random questions for the given room
+			questions = Question.objects.filter(room=room).order_by('?')[:10]
 			# Add Result objects (question and answer pairs) for each question
 			i = 1 # Sequence number for each question
 			for q in questions:
@@ -66,18 +66,22 @@ def question(request):
 	if request.user.is_authenticated():
 		room_id = request.session.get('room_id', None)
 		if room_id:
-			t = get_object_or_404(Turn, room=room_id, user=request.user, complete=False)
+			try:
+				turn = Turn.objects.get(room=room_id, user=request.user, complete=False)
+			except Turn.DoesNotExist:
+				return HttpResponseRedirect('/room/%s/' % room_id)
 			try:
 				# The Meta.ordering defined in model will sort
 				# the result ascending on Result.index
-				result = Result.objects.filter(turn=t, answer='')[:1]
+				result = Result.objects.filter(turn=turn, answer='')[:1]
 				if not result:
-					return render_to_response('room.html', {'turn': t, 'user': request.user})
-				num_questions = Result.objects.filter(turn=t).count()
-				return render_to_response('question.html', {'user': request.user,'turn': t, 'result': result[0], \
+					return render_to_response('room.html', {'turn': turn, 'user': request.user})
+				
+				num_questions = Result.objects.filter(turn=turn).count()
+				return render_to_response('question.html', {'user': request.user,'turn': turn, 'result': result[0], \
 						'num_questions': num_questions, 'room_id': room_id})
 			except Result.DoesNotExist:
-				pass
+				return HttpResponseRedirect('/room/%s/' % room_id)
 	else:
 		return HttpResponseRedirect(login_url)
 
@@ -117,7 +121,7 @@ def answer(request):
 				return HttpResponse(json.dumps({'correct': correct, 'index': index, \
 						'question': question, 'points': user.get_profile().points}))
 			except Result.DoesNotExist:
-				return HttpResponse('wtf')
+				return HttpResponseRedirect('/room/%s/' % room_id)
 	else:
 		return HttpResponseRedirect(login_url)
 
