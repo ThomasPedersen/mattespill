@@ -53,7 +53,7 @@ def room(request, room_id):
 				result.save()
 				i += 1
 		previous_turns = Turn.objects.filter(room=room, user=request.user, complete=True).\
-				order_by('-total_points').order_by('-date_start').all()
+				order_by('-date_start').order_by('-total_points').all()
 		return render_to_response('room.html', {'turn_exists': turn_exists, 'turn': t, \
 				'user': request.user, 'previous_turns': previous_turns})
 	else:
@@ -93,11 +93,11 @@ def answer(request):
 			given_answer = request.POST['answer'].strip()
 			user = request.user
 			t = get_object_or_404(Turn, room=room_id, user=user, complete=False)
+			count = Result.objects.filter(turn=t).count()
+			result = Result.objects.filter(turn=t, answer='')[0]
 			try:	
 				#r = Result.objects.filter(turn=t, answer='')
-				count = Result.objects.filter(turn=t).count()
-				result = Result.objects.filter(turn=t, answer='')[0]
-				if result.index <= count:
+				if result.index < count:
 					index = result.index + 1
 					question = Result.objects.get(turn=t, index=index).question.question
 				else:
@@ -121,8 +121,8 @@ def answer(request):
 				result.save()
 				return HttpResponse(json.dumps({'correct': correct, 'index': index, \
 						'question': question, 'points': user.get_profile().points}))
-			except Result.DoesNotExist:
-				return HttpResponseRedirect('/room/%s/' % room_id)
+			except Result.DoesNotExist as e:
+				return HttpResponse(e)
 	else:
 		return HttpResponseRedirect(login_url)
 
