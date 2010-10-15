@@ -1,5 +1,5 @@
 $(function() {
-	$('.simple_button').click(function() {
+	$('.start_button').click(function() {
 		if ($.trim($('input[name=answer]').val()) == '') {
 			alert('Du må skrive inn noe!');
 			$('input[name=answer]').val('');
@@ -23,7 +23,7 @@ $(function() {
 				}
 
 				if (data.index < 0) {
-					$('#question_wrapper').hide();
+					$('#question_wrapper').remove();
 					$('#finished_wrapper').show();
 				}
 				else {
