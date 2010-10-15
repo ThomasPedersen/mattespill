@@ -71,7 +71,8 @@ def answer(request):
 		room_id = request.session.get('room_id', None)
 		if room_id and 'answer' in request.POST:
 			given_answer = request.POST['answer']
-			t = get_object_or_404(Turn, room=room_id, user=request.user)
+			user = request.user
+			t = get_object_or_404(Turn, room=room_id, user=user)
 			try:	
 				r = Result.objects.filter(turn=t, answer='')
 				count = r.count()
@@ -84,11 +85,13 @@ def answer(request):
 					question = None
 				correct = given_answer == result.question.real_answer
 				if correct:
-					request.user.get_profile().points += result.question.points
+					# Give user some points
+					user.get_profile().points += result.question.points
+					user.get_profile().save()
 				result.answer = given_answer
 				result.save()
 				return HttpResponse(json.dumps({'correct': correct, 'index': index, \
-						'question': question, 'points': request.user.get_profile().points}))
+						'question': question, 'points': user.get_profile().points}))
 			except Result.DoesNotExist:
 				return HttpResponse('wtf')
 	else:
