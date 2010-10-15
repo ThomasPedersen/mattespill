@@ -94,9 +94,9 @@ def answer(request):
 			user = request.user
 			t = get_object_or_404(Turn, room=room_id, user=user, complete=False)
 			try:	
-				r = Result.objects.filter(turn=t, answer='')
-				count = r.count()
-				result = r[0]
+				#r = Result.objects.filter(turn=t, answer='')
+				count = Result.objects.filter(turn=t).count()
+				result = Result.objects.filter(turn=t, answer='')[0]
 				if result.index <= count:
 					index = result.index + 1
 					question = Result.objects.get(turn=t, index=index).question.question
