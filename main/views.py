@@ -45,7 +45,7 @@ def room(request, room_id):
 				result = Result(question=q, turn=t, index=i)
 				result.save()
 				i += 1
-		previous_turns = Turn.objects.filter(room=room, user=request.user, complete=True).all()
+		previous_turns = Turn.objects.filter(room=room, user=request.user, complete=True).order_by('-total_points').all()
 		return render_to_response('room.html', {'turn_exists': turn_exists, 'turn': t, \
 				'user': request.user, 'previous_turns': previous_turns})
 	else:
