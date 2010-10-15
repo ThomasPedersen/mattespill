@@ -1,5 +1,9 @@
 $(function() {
 	$('.simple_button').click(function() {
+		if ($('input[name=answer]').val() == '') {
+			alert('Du må skrive inn noe!');
+			return;
+		}
 		$.ajax({
 			type: 'POST',
 			url: '/answer/',
@@ -31,4 +35,9 @@ $(function() {
 			}
 		});
 	});
-})
+
+	$('#answer_form').submit(function() {
+		$('.simple_button').click();
+		return false;
+	});
+});
