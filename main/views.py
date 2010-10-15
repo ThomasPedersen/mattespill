@@ -123,7 +123,7 @@ def signup(request):
 			return HttpResponseRedirect('/')
 		else:
 			form = SignupForm()
-		return render_to_response('signup.html', {'form': form}, context_instance=RequestContext(reqest))
+		return render_to_response('signup.html', {'form': form}, context_instance=RequestContext(request))
 	else: 
 		form = SignupForm()
 		return render_to_response('signup.html', {'form': form}, context_instance=RequestContext(request))
