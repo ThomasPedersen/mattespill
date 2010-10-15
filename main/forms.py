@@ -13,15 +13,15 @@ class SignupForm(forms.Form):
     
     def clean_username(self):
         try:
-            User.objects.get(username=self.cleaned_data['username'])
+            User.objects.get(username=self.cleaned_data['Brukernavn'])
         except User.DoesNotExist:
-            return self.cleaned_data['username']
-        raise forms.ValidationError("This username is already in use")
+            return self.cleaned_data['Brukernavn']
+        raise forms.ValidationError("Dette brukernavnet er allerede tatt.")
     
     def clean(self):
-        if 'password1' in self.changed_data and 'password2' in self.changed_data:
-            if self.cleaned_data['password1'] != self.cleaned_data['password2']:
-                raise forms.ValidationError("Passwords do not match")
+        if 'Passord' in self.changed_data and 'Bekreft_Passord' in self.changed_data:
+            if self.cleaned_data['Passord'] != self.cleaned_data['Bekreft_Passord']:
+                raise forms.ValidationError("Passordene er ikke like")
         return self.cleaned_data
     
     def save(self):
