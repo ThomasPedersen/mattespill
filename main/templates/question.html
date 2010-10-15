@@ -15,6 +15,9 @@
  	-webkit-border-radius: .3em;
 	border-radius: .3em;
 }
+#finished_wrapper {
+	display: none;
+}
 </style>
 <script src="/media/question.js" type="text/javascript"></script>
 {% endblock %}
@@ -31,10 +34,14 @@
 
 <form id="answer_form" action="" method="post">
 	<input type="text" name="answer" />
-	<p class="start_button_container"><span class="simple_button">Neste sp&oslash;rsm&aring;l</span></p></p>
+	<p class="start_button_container"><span class="simple_button">Svar</span></p></p>
 </form>
 
 <p class="back_button"><a href="/room/{{ room_id }}/">G&aring; tilbake til rommet</a></p>
 </div>
 
+<div id="finished_wrapper">
+	<p>Du er ferdig med dette fors&oslash;ket!</p>
+	<p class="start_button_container"><span class="simple_button"><a href="/room/{{ room_id }}/">Tilbake til rommet!</a></span></p>
+</div>
 {% endblock %}

@@ -1,7 +1,8 @@
 $(function() {
 	$('.simple_button').click(function() {
-		if ($('input[name=answer]').val() == '') {
+		if ($.trim($('input[name=answer]').val()) == '') {
 			alert('Du må skrive inn noe!');
+			$('input[name=answer]').val('');
 			return;
 		}
 		$.ajax({
@@ -22,7 +23,8 @@ $(function() {
 				}
 
 				if (data.index < 0) {
-					$('#question_wrapper').html('<p>Du er ferdig med dette fors&oslash;ket!</p><p class="start_button_container"><span class="simple_button"><a href="/room/1">Tilbake til rommet!</a></span></p>'); // FIX
+					$('#question_wrapper').hide();
+					$('#finished_wrapper').show();
 				}
 				else {
 					$('input[name=answer]').val('');
