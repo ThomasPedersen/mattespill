@@ -44,8 +44,8 @@ def room(request, room_id):
 		except Turn.DoesNotExist:
 			t = Turn(date_start=datetime.now(), date_end=None, user=request.user, room=room)
 			t.save()
-			# Fetch 10 questions for the given room
-			questions = Question.objects.filter(room=room)[:10]
+			# Fetch 10 random questions for the given room
+			questions = Question.objects.filter(room=room).order_by('?')[:10]
 			# Add Result objects (question and answer pairs) for each question
 			i = 1 # Sequence number for each question
 			for q in questions:
