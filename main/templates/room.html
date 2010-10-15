@@ -5,15 +5,47 @@
 .start_button_container {
 	margin: 2em 0;
 }
+#previous_turns {
+	display: none;
+}
+#toggle_table {
+	cursor: pointer;
+}
 </style>
+<script src="/media/room.js" type="text/javascript"></script>
 {% endblock %}
 
 
 {% block content %}
 <h1>Du befinner deg i {{ turn.room }}srommet</h1>
 <p>Dette rommet best&aring;r av {{ turn.result_set.all|length }} oppgaver.</p>
+{% if previous_turns|length > 0 %}
+<h2>Tidligere fors&oslash;k</h2>
+<p>Du har fors&oslash;kt deg p&aring; dette rommet <b>{{ previous_turns|length }}</b> ganger.</p>
+<p>Beste resultat</p>
+<p><a id="toggle_table">Vis/skjul</a></p>
+<div id="previous_turns">
+<table class="styled">
+<tr>
+	<th>Dato</th>
+	<th>Poengresultat</th>
+</tr>
+{% for o in previous_turns %}
+<tr>
+	<td>{{ o.date_start }}</td>
+	<td>{{ o.total_points }}</td>
+</tr>
+{% endfor %}
+</table>
+</div>
+{% endif %}
 <p class="start_button_container"><a href="/question/"><span class="simple_button">
-Start oppgavene!
+{% if turn_exists %}
+Fortsett ditt fors&oslash;k
+{% else %}
+{% if previous_turns|length > 0 %}Start et nytt fors&oslash;k!{% else %}Start oppgavene!{% endif %}
+{% endif %}
 </span></a></p>
+
 <p class="back_button"><a href="/">G&aring; tilbake til hovedsiden</a></p>
 {% endblock %}

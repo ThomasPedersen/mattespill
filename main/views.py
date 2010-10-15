@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from django.template import Context, loader
+from django.template import RequestContext, Context, loader
 from django.utils import simplejson
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.core import serializers
 from datetime import datetime
 from mattespill.main.models import Question, Room, Turn, Result
+from mattespill.main.forms import SignupForm
 import json
 
 login_url = '/login/'
@@ -113,3 +114,18 @@ def answer(request):
 	else:
 		return HttpResponseRedirect(login_url)
 
+
+def signup(request):
+	if request.method == 'POST':
+		form = SignupForm(data=request.POST)
+		if form.is_valid():
+			form.save();
+			return HttpResponseRedirect('/')
+		else:
+			form = SignupForm()
+		return render_to_response('signup.html', {'form': form}, context_instance=RequestContext(request))
+	else: 
+		form = SignupForm()
+		return render_to_response('signup.html', {'form': form}, context_instance=RequestContext(request))
+
+		

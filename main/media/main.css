@@ -18,7 +18,12 @@ body {
 
 
 h1 {
+	font-size: 1.8em;
 	margin-top: 0;
+}
+h2 {
+	font-size: 1.4em;
+	color: #666;
 }
 .chest_header {
 	margin-top: 0;
@@ -194,4 +199,28 @@ img#treasure_chest {
 }
 .back_button {
 	margin-top: 4em;
+}
+
+
+table.styled {
+	text-align: left;
+	border-collapse: collapse;
+	border: 2px solid #b7d4f4;
+}
+
+table.styled th {
+	background-color: #eaf0f6;
+	border: 1px solid #d1e3f6;
+}
+table.styled td {
+	background-color: #f7f7f7;
+	border: 1px solid #dadada;
+}
+
+table.styled tr:nth-child(even) td {
+	background-color: white;
+}
+
+table.styled td, table.styled th {
+	padding: .3em .4em;
 }
