@@ -70,7 +70,7 @@ def answer(request):
 	if request.user.is_authenticated() and request.method == 'POST':
 		room_id = request.session.get('room_id', None)
 		if room_id and 'answer' in request.POST:
-			given_answer = request.POST['answer']
+			given_answer = request.POST['answer'].strip()
 			user = request.user
 			t = get_object_or_404(Turn, room=room_id, user=user)
 			try:	
