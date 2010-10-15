@@ -19,7 +19,7 @@
 {% block content %}
 <h1>Du befinner deg i {{ turn.room }}srommet</h1>
 <p>Dette rommet best&aring;r av {{ turn.result_set.all|length }} oppgaver.</p>
-{% if previous_turns|length > 0 %}
+{% if previous_turns|length %}
 <h2>Tidligere fors&oslash;k</h2>
 <p>Du har fors&oslash;kt deg p&aring; dette rommet <b>{{ previous_turns|length }}</b> ganger.</p>
 <p>Beste resultat</p>
