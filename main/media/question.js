@@ -42,4 +42,6 @@ $(function() {
 		$('.simple_button').click();
 		return false;
 	});
+
+	$('input[name=answer]').focus();
 });
