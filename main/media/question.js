@@ -18,7 +18,7 @@ $(function() {
 				}
 
 				if (data.index < 0) {
-					$('#question_wrapper').html('<p>Du er ferdig med dette fors&oslash;ket!</p><p class="start_button_container"><span class="simple_button">Tilbake til rommet!</span></p>'); // FIX
+					$('#question_wrapper').html('<p>Du er ferdig med dette fors&oslash;ket!</p><p class="start_button_container"><span class="simple_button"><a href="/room/1">Tilbake til rommet!</a></span></p>'); // FIX
 				}
 				else {
 					$('input[name=answer]').val('');

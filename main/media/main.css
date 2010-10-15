@@ -189,6 +189,9 @@ img#treasure_chest {
  	-webkit-border-radius: .6em;
 	border-radius: .6em;
 }
+.simple_button a {
+	color: inherit;
+}
 .back_button {
 	margin-top: 4em;
 }
