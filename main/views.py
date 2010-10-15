@@ -88,7 +88,7 @@ def answer(request):
 				result.answer = given_answer
 				result.save()
 				return HttpResponse(json.dumps({'correct': correct, 'index': index, \
-						'question': question}))
+						'question': question, 'points': request.user.get_profile().points}))
 			except Result.DoesNotExist:
 				return HttpResponse('wtf')
 	else:
