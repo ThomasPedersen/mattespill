@@ -26,6 +26,7 @@
 <p id="correct_answer">Du svarte riktig p&aring; forrige oppgave.</p>
 <p id="wrong_answer">Feil svar p&aring; forrige oppgave.</p>
 
+<div id="question_wrapper">
 <p id="question_text">{{ result.question.question}}</p>
 
 <form action="question" method="post">
@@ -34,4 +35,6 @@
 </form>
 
 <p class="back_button"><a href="/room/{{ room_id }}/">G&aring; tilbake til rommet</a></p>
+</div>
+
 {% endblock %}
