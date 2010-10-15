@@ -29,8 +29,10 @@ def room(request, room_id):
 			room = get_object_or_404(Room, pk=sess_room_id)
 
 		request.session['room_id'] = room_id
+		turn_exists = False
 		try:
 			t = Turn.objects.get(room=room, user=request.user, complete=False)
+			turn_exists = True
 		except Turn.DoesNotExist:
 			t = Turn(date_start=datetime.now(), date_end=None, user=request.user, room=room)
 			t.save()
@@ -43,7 +45,8 @@ def room(request, room_id):
 				result.save()
 				i += 1
 		previous_turns = Turn.objects.filter(room=room, user=request.user, complete=True).all()
-		return render_to_response('room.html', {'turn': t, 'user': request.user, 'previous_turns': previous_turns})
+		return render_to_response('room.html', {'turn_exists': turn_exists, 'turn': t, \
+				'user': request.user, 'previous_turns': previous_turns})
 	else:
 		return HttpResponseRedirect(login_url)
 
