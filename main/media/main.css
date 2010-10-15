@@ -16,6 +16,9 @@ body {
 	background: url(images/stripes.png);
 }
 
+*:focus {
+	outline: none;
+}
 
 h1 {
 	font-size: 1.8em;
