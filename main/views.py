@@ -59,8 +59,11 @@ def question(request):
 				# The Meta.ordering defined in model will sort
 				# the result ascending on Result.index
 				result = Result.objects.filter(turn=t, answer='')[:1]
+				if not result:
+					return render_to_response('room.html', {'turn': t, 'user': request.user})
 				num_questions = Result.objects.filter(turn=t).count()
-				return render_to_response('question.html', {'user': request.user,'turn': t, 'result': result[0], 'num_questions': num_questions, 'room_id': room_id})
+				return render_to_response('question.html', {'user': request.user,'turn': t, 'result': result[0], \
+						'num_questions': num_questions, 'room_id': room_id})
 			except Result.DoesNotExist:
 				pass
 	else:
