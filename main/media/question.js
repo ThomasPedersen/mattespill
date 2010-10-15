@@ -6,12 +6,13 @@ $(function() {
 			dataType: 'json',
 			data: {answer: $('input[name=answer]').val()},
 			success: function(data, textStatus) {
-				if (data.done) {
+				$('input[name=answer]').val('');
+				if (data.index < 0) {
 					document.location.href = '/room/'; // FIXME
 				}
 				else {
-					$('#question_index').text(data.next_index);
-					$('#question_text').text(data.next_question);
+					$('#question_index').text(data.index);
+					$('#question_text').text(data.question);
 					
 					if (data.correct) {
 						$('#wrong_answer').hide();
