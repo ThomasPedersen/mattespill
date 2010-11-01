@@ -120,7 +120,7 @@ a:hover {
 }
 .simple_button {
 	cursor: pointer;
-	padding: .5em;
+	padding: .5em 1.5em;
 	background-color: #627AAD;
 	color: #fff;
 	font-weight: bold;
