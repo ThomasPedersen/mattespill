@@ -1,9 +1,33 @@
 var bearTimer;
 
 function showBear() {
-	$('#hintbear').html('Har du lyst p&aring; hjelp?<br />Klikk p&aring; meg!').show().animate({
+	$('#hintbear').css('cursor', 'pointer').click(function() {
+		$.ajax({
+			type: 'POST',
+			url: '/buyhint/',
+			dataType: 'json',
+			success: function(data, textStatus) {
+				$('#hintbear').unbind('click').css('cursor', 'auto');
+
+				if (data.hint == null) {
+					$('#hintbear .dialogbox').text(data.hint);
+					return;
+				}
+
+				$('#hintbear .dialogbox').text(data.hint);
+
+				$('#num_points').text(data.points);
+			},
+			error: function(XMLHttpRequest, textStatus) {
+				alert('Det oppstod en feil');
+			}
+		});
+	});
+
+	$('#hintbear .dialogbox').html('Har du lyst p&aring; hjelp?<br />Klikk p&aring; meg!');
+	$('#hintbear').show().animate({
 		opacity: 1,
-		marginRight: '0em',
+		marginRight: '0em'
 	}, 1000, function() {
 		$('#hintbear .dialogbox').fadeIn(500);
 	});
@@ -18,7 +42,7 @@ function stopBear() {
 	$('#hintbear').animate({
 		opacity: 0,
 		marginRight: '-7em'
-	}, 1000, $('#hintbear').hide);
+	}, 400, $('#hintbear').hide);
 }
 
 $(function() {
@@ -30,8 +54,6 @@ $(function() {
 			$('input[name=answer]').val('');
 			return;
 		}
-
-		startBear();
 
 		$.ajax({
 			type: 'POST',
@@ -58,6 +80,8 @@ $(function() {
 					$('input[name=answer]').val('').focus();
 					$('#question_index').text(data.index);
 					$('#question_text').text(data.question);
+
+					startBear();
 				}
 			},
 			error: function(XMLHttpRequest, textStatus) {
@@ -69,22 +93,6 @@ $(function() {
 	$('#answer_form').submit(function() {
 		$('.simple_button').click();
 		return false;
-	});
-
-	$('#hintbear').click(function() {
-		$.ajax({
-			type: 'POST',
-			url: '/buyhint/',
-			dataType: 'json',
-			success: function(data, textStatus) {
-				$('#hintbear .dialogbox').text(data.hint);
-				$('#num_points').text(data.points);
-				$('#hintbear').unbind('click').css('cursor', 'auto');
-			},
-			error: function(XMLHttpRequest, textStatus) {
-				alert('Det oppstod en feil');
-			}
-		});
 	});
 
 	$('input[name=answer]').focus();

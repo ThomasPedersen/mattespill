@@ -16,7 +16,7 @@ function showPeekbear() {
 				$(this).animate({
 					bottom: '-' + bearSize
 				}, 300, function() {
-					$('body').remove(this);
+					$(this).remove();
 				});
 			});
 			break;
@@ -28,7 +28,7 @@ function showPeekbear() {
 				$(this).animate({
 					right: '-' + bearSize
 				}, 300, function() {
-					$('body').remove(this);
+					$(this).remove();
 				});
 			});
 			break;
@@ -40,7 +40,7 @@ function showPeekbear() {
 				$(this).animate({
 					left: '-' + bearSize
 				}, 300, function() {
-					$('body').remove(this);
+					$(this).remove();
 				});
 			});
 			break;
