@@ -38,12 +38,43 @@ input[name=answer] {
 	-moz-box-shadow: 0 0 .7em #bbb;
 	box-shadow: 0 0 .7em #bbb;
 }
+#hintbear {
+	cursor: pointer;
+	float: right;
+	position: relative;
+
+	display: none;
+	opacity: 0;
+	margin-right: -7em;
+}
+#hintbear img {
+	width: 10em;
+}
+#hintbear .dialogbox {
+	display: none;
+	position: absolute;
+	left: -9em;
+	top: 0em;
+
+	padding: .5em;
+	border: .2em solid #000;
+	background-color: #fff;
+	-webkit-box-shadow: 0 0 1em #888;
+	-moz-box-shadow: 0 0 1em #888;
+	box-shadow: 0 0 1em #888;
+	-moz-border-radius: 1em;
+	-webkit-border-radius: 1em;
+	border-radius: 1em;
+}
 </style>
 <script src="/media/question.js" type="text/javascript"></script>
 {% endblock %}
 
 
 {% block content %}
+<div id="hintbear"><div class="dialogbox">Har du lyst p&aring; hjelp?<br />Klikk p&aring; meg!</div><img alt="Hintbj&oslash;rnen" src="/media/images/hintbear.png" /></div>
+
+
 <h1>Sp&oslash;rsm&aring;l <span id="question_index">{{ result.index }}</span> av {{ num_questions }}</h1>
 
 <p id="correct_answer">Du svarte riktig p&aring; forrige oppgave.</p>

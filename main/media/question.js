@@ -1,3 +1,21 @@
+var bearTimer;
+
+function showBear() {
+	$('#hintbear').show().animate({
+		opacity: 1,
+		marginRight: '0em',
+	}, 1000, function() {
+		$('#hintbear .dialogbox').fadeIn(500);
+	});
+}
+function startBear() {
+	bearTimer = setTimeout(showBear, 1000);
+}
+function stopBear() {
+	if (bearTimer != null)
+		clearTimeout(bearTimer);
+}
+
 $(function() {
 	$('.start_button').click(function() {
 		if ($.trim($('input[name=answer]').val()) == '') {
@@ -5,6 +23,9 @@ $(function() {
 			$('input[name=answer]').val('');
 			return;
 		}
+
+		startBear();
+
 		$.ajax({
 			type: 'POST',
 			url: '/answer/',
@@ -44,4 +65,9 @@ $(function() {
 	});
 
 	$('input[name=answer]').focus();
+	startBear();
+
+	$('#hintbear').click(function() {
+		alert('aaaaahh');
+	});
 });
