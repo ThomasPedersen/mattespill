@@ -26,6 +26,13 @@ class Room(models.Model):
 	def __unicode__(self):
 		return self.name
 
+class Hint(models.Model):
+	text = models.TextField()
+	room = models.ForeignKey(Room)
+
+	def __unicode__(self):
+		return '[%s] %s' % (self.room, self.text)
+
 class Question(models.Model):
 	question = models.CharField(max_length=200)
 	# Set to current date when object is created
