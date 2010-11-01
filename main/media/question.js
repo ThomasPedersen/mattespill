@@ -10,8 +10,10 @@ function showBear() {
 				$('#hintbear').unbind('click').css('cursor', 'auto');
 				$('#num_points').text(data.points);
 
-				if (data.hint == null)
+				if (data.hint == null) {
 					$('#hintbear .dialogbox').text('Du har nok for lite penger!');
+					setTimeout(stopBear, 2000);
+				}
 				else
 					$('#hintbear .dialogbox').text(data.hint);
 			},
