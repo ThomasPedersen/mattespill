@@ -70,10 +70,10 @@ def buyhint(request):
 			hint = Hint.objects.filter(room=room_id).order_by('?')[:1]
 			# Subtract points from user
 			profile = request.user.get_profile()
-			profile.points -= hint.cost
+			profile.points -= hint[0].cost
 			profile.save()
 			# Return json response
-			return HttpResponse(json.dumps({'points': profile.points, 'hint': hint.text}), \
+			return HttpResponse(json.dumps({'points': profile.points, 'hint': hint[0].text}), \
 					mimetype='application/json')
 	else:
 		return HttpResponseForbidden()

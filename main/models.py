@@ -28,7 +28,7 @@ class Room(models.Model):
 
 class Hint(models.Model):
 	text = models.TextField()
-	cost = models.IntegerField()
+	cost = models.IntegerField(default=0)
 	room = models.ForeignKey(Room)
 
 	def __unicode__(self):
