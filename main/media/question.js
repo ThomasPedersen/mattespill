@@ -8,15 +8,12 @@ function showBear() {
 			dataType: 'json',
 			success: function(data, textStatus) {
 				$('#hintbear').unbind('click').css('cursor', 'auto');
-
-				if (data.hint == null) {
-					$('#hintbear .dialogbox').text(data.hint);
-					return;
-				}
-
-				$('#hintbear .dialogbox').text(data.hint);
-
 				$('#num_points').text(data.points);
+
+				if (data.hint == null)
+					$('#hintbear .dialogbox').text('Du har nok for lite penger!');
+				else
+					$('#hintbear .dialogbox').text(data.hint);
 			},
 			error: function(XMLHttpRequest, textStatus) {
 				alert('Det oppstod en feil');
