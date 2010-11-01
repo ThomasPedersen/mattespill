@@ -104,7 +104,6 @@ def answer(request):
 			count = Result.objects.filter(turn=t).count()
 			result = Result.objects.filter(turn=t, answer='')[0]
 			try:	
-				#r = Result.objects.filter(turn=t, answer='')
 				if result.index < count:
 					index = result.index + 1
 					question = Result.objects.get(turn=t, index=index).question.question
@@ -119,7 +118,7 @@ def answer(request):
 					user.get_profile().points += result.question.points
 					t.total_points += result.question.points
 				else:
-					# For wrong answer users looses question points / 2
+					# For wrong answer users lose (question points / 2)
 					penalty = result.question.points / 2
 					user.get_profile().points -= penalty
 					t.total_points -= penalty
@@ -148,4 +147,3 @@ def signup(request):
 		form = SignupForm()
 		return render_to_response('signup.html', {'form': form}, context_instance=RequestContext(request))
 
-		
