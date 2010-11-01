@@ -1,11 +1,11 @@
 var bearTimer;
 
 function showBear() {
-	$('#hintbear').show().animate({
+	$('#hintbear').html('Har du lyst p&aring; hjelp?<br />Klikk p&aring; meg!').show().animate({
 		opacity: 1,
 		marginRight: '0em',
 	}, 1000, function() {
-		$('#hintbear .dialogbox').html('Har du lyst p&aring; hjelp?<br />Klikk p&aring; meg!').fadeIn(500);
+		$('#hintbear .dialogbox').fadeIn(500);
 	});
 }
 function startBear() {
