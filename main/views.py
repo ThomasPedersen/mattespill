@@ -73,7 +73,7 @@ def buyhint(request):
 			cost = hint[0].cost
 			if profile.points - cost < 1:
 				return HttpResponse(json.dumps({'points': profile.points, \
-						'hint': None}))
+						'hint': None}), mimetype='application/json')
 			else:
 				profile.points -= cost
 				profile.save()
