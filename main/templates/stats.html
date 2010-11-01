@@ -1,0 +1,32 @@
+{% extends "outer.html" %}
+
+{% block head %}
+<style type="text/css">
+table tr.most_points td {
+	background-color: #aaffaa;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<h1>Resultater</h1>
+<p>Her kan du se en oversikt over de 10 beste spillerne.</p>
+
+<table class="styled">
+ <tr>
+    <th>Brukernavn</th>
+	<th>Navn</th>
+	<th>Antall poeng</th>
+</tr>
+{% for u in users %}
+
+<tr{% if forloop.first %} class="most_points"{% endif %}>
+    <td>{{ u.user.username }}</td>
+    <td>{{ u.user.first_name }} {{ u.user.last_name }}</td>
+	<td>{{ u.points }}</td>
+</tr>
+{% endfor %}
+</table>
+
+<p class="back_button"><a href="/">G&aring; tilbake til hovedsiden</a></p>
+{% endblock %}

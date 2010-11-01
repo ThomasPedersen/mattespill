@@ -9,7 +9,7 @@ from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
 from datetime import datetime
-from mattespill.main.models import Question, Room, Turn, Result
+from mattespill.main.models import Question, Room, Turn, Result, UserProfile
 from mattespill.main.forms import SignupForm
 import json
 
@@ -62,6 +62,14 @@ def room(request, room_id):
 def logout(request):
 	auth.logout(request)
 	return HttpResponseRedirect('/')
+
+def stats(request):
+    if request.user.is_authenticated():
+        # Get max 10 users ordered by points desc
+        users = UserProfile.objects.order_by('-points')[:10]
+        return render_to_response('stats.html', {'user': request.user, 'users': users})
+    else:
+        return HttpResponseRedirect(login_url)
 
 def question(request):
 	if request.user.is_authenticated():
