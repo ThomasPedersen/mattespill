@@ -2,14 +2,13 @@
 
 from django.template import RequestContext, Context, loader
 from django.utils import simplejson
-from django.http import HttpResponse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden
 from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
 from datetime import datetime
-from mattespill.main.models import Question, Room, Turn, Result, UserProfile
+from mattespill.main.models import Question, Room, Turn, Result, UserProfile, Hint
 from mattespill.main.forms import SignupForm
 import json
 
@@ -62,6 +61,22 @@ def room(request, room_id):
 def logout(request):
 	auth.logout(request)
 	return HttpResponseRedirect('/')
+
+def buyhint(request):
+	if request.user.is_authenticated():
+		# Get a random hint
+		room_id = request.session.get('room_id', None)
+		if room_id:
+			hint = Hint.objects.filter(room=room_id).order_by('?')[:1]
+			# Subtract points from user
+			profile = request.user.get_profile()
+			profile.points -= hint.cost
+			profile.save()
+			# Return json response
+			return HttpResponse(json.dumps({'points': profile.points, 'hint': hint.text}), \
+					mimetype='application/json')
+	else:
+		return HttpResponseForbidden()
 
 def stats(request):
     if request.user.is_authenticated():
@@ -127,7 +142,8 @@ def answer(request):
 				result.answer = given_answer
 				result.save()
 				return HttpResponse(json.dumps({'correct': correct, 'index': index, \
-						'question': question, 'points': user.get_profile().points}))
+						'question': question, 'points': user.get_profile().points}), \
+						mimetype='application/json')
 			except Result.DoesNotExist as e:
 				return HttpResponse(e)
 	else:
