@@ -68,13 +68,18 @@ def buyhint(request):
 		room_id = request.session.get('room_id', None)
 		if room_id:
 			hint = Hint.objects.filter(room=room_id).order_by('?')[:1]
-			# Subtract points from user
+			# Check if user has enough points
 			profile = request.user.get_profile()
-			profile.points -= hint[0].cost
-			profile.save()
-			# Return json response
-			return HttpResponse(json.dumps({'points': profile.points, 'hint': hint[0].text}), \
-					mimetype='application/json')
+			cost = hint[0].cost
+			if profile.points - cost < 1:
+				return HttpResponse(json.dumps({'points': profile.points, \
+						'hint': None}))
+			else:
+				profile.points -= cost
+				profile.save()
+				# Return json response
+				return HttpResponse(json.dumps({'points': profile.points, 'hint': hint[0].text}), \
+						mimetype='application/json')
 	else:
 		return HttpResponseForbidden()
 
