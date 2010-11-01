@@ -52,6 +52,6 @@ function showPeekbear() {
 }
 
 $(function() {
-	setInterval(showPeekbear, 3000);
+	setInterval(showPeekbear, 7000);
 	showPeekbear();
 });
