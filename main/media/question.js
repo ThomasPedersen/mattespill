@@ -6,8 +6,10 @@ function showBear() {
 			type: 'POST',
 			url: '/buyhint/',
 			dataType: 'json',
-			success: function(data, textStatus) {
+			complete: function() {
 				$('#hintbear').unbind('click').css('cursor', 'auto');
+			},
+			success: function(data, textStatus) {
 				$('#num_points').text(data.points);
 
 				if (data.hint == null) {
@@ -46,13 +48,13 @@ function stopBear() {
 
 $(function() {
 	$('.start_button').click(function() {
-		stopBear();
-
 		if ($.trim($('input[name=answer]').val()) == '') {
 			alert('Du må skrive inn noe!');
 			$('input[name=answer]').val('');
 			return;
 		}
+
+		stopBear();
 
 		$.ajax({
 			type: 'POST',
