@@ -1,7 +1,7 @@
 var bearTimer;
 
 function showBear() {
-	$('#hintbear').show().animate({
+	$('#hintbear').html('Har du lyst p&aring; hjelp?<br />Klikk p&aring; meg!').show().animate({
 		opacity: 1,
 		marginRight: '0em',
 	}, 1000, function() {
@@ -9,15 +9,22 @@ function showBear() {
 	});
 }
 function startBear() {
-	bearTimer = setTimeout(showBear, 1000);
+	bearTimer = setTimeout(showBear, 5000);
 }
 function stopBear() {
 	if (bearTimer != null)
 		clearTimeout(bearTimer);
+
+	$('#hintbear').animate({
+		opacity: 0,
+		marginRight: '-7em'
+	}, 1000, $('#hintbear').hide);
 }
 
 $(function() {
 	$('.start_button').click(function() {
+		stopBear();
+
 		if ($.trim($('input[name=answer]').val()) == '') {
 			alert('Du må skrive inn noe!');
 			$('input[name=answer]').val('');
@@ -64,10 +71,22 @@ $(function() {
 		return false;
 	});
 
+	$('#hintbear').click(function() {
+		$.ajax({
+			type: 'POST',
+			url: '/buyhint/',
+			dataType: 'json',
+			success: function(data, textStatus) {
+				$('#hintbear .dialogbox').text(data.hint);
+				$('#num_points').text(data.points);
+				$('#hintbear').unbind('click').css('cursor', 'auto');
+			},
+			error: function(XMLHttpRequest, textStatus) {
+				alert('Det oppstod en feil');
+			}
+		});
+	});
+
 	$('input[name=answer]').focus();
 	startBear();
-
-	$('#hintbear').click(function() {
-		alert('aaaaahh');
-	});
 });
