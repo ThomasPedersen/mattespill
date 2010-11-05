@@ -16,14 +16,20 @@ login_url = '/login/'
 
 def index(request):
 	if request.user.is_authenticated():
-		rooms = Room.objects.all()
-		return render_to_response('home.html', {'user': request.user, 'home': True, \
-				'rooms': rooms})
+		if request.user.get_profile().is_gameover():
+			return render_to_response('game_over.html', {'user': request.user})		
+		else:
+			rooms = Room.objects.all()
+			return render_to_response('home.html', {'user': request.user, 'home': True, \
+					'rooms': rooms})
 	else:
 		return HttpResponseRedirect(login_url)
 
 def room(request, room_id):
 	if request.user.is_authenticated():
+		if request.user.get_profile().is_gameover():
+			return render_to_response('game_over.html')
+		
 		sess_room_id = request.session.get('room_id', None)
 		if not sess_room_id or sess_room_id != room_id:
 			room = get_object_or_404(Room, pk=room_id)
@@ -62,8 +68,23 @@ def logout(request):
 	auth.logout(request)
 	return HttpResponseRedirect('/')
 
-def buyhint(request):
+def newgame(request):
 	if request.user.is_authenticated():
+		if request.user.get_profile().is_gameover():
+			# Delete all turns for user
+			Turn.objects.filter(user=request.user).delete()
+			# Reset points for user
+			profile = request.user.get_profile()
+			profile.points = 50
+			profile.save()
+		return HttpResponseRedirect('/')
+	else:
+		return HttpResponseRedirect(login_url)
+
+def buyhint(request):
+	if request.user.is_authenticated() and request.method == 'POST':
+		if request.user.get_profile().is_gameover():
+			return HttpResponseForbidden
 		# Get a random hint
 		room_id = request.session.get('room_id', None)
 		if room_id:
@@ -71,7 +92,7 @@ def buyhint(request):
 			# Check if user has enough points
 			profile = request.user.get_profile()
 			cost = hint[0].cost
-			if profile.points - cost < 1:
+			if profile.points - cost <= 0:
 				return HttpResponse(json.dumps({'points': profile.points, \
 						'hint': None}), mimetype='application/json')
 			else:
@@ -80,11 +101,15 @@ def buyhint(request):
 				# Return json response
 				return HttpResponse(json.dumps({'points': profile.points, 'hint': hint[0].text}), \
 						mimetype='application/json')
+		else:
+			return HttpResponse('You must select a room before buying hints')
 	else:
 		return HttpResponseForbidden()
 
 def stats(request):
 	if request.user.is_authenticated():
+		if request.user.get_profile().is_gameover():
+			return render_to_response('game_over.html')
 		# Get max 10 users ordered by points desc
 		users = UserProfile.objects.order_by('-points')[:10]
 		return render_to_response('stats.html', {'user': request.user, 'users': users})
@@ -93,6 +118,9 @@ def stats(request):
 
 def question(request):
 	if request.user.is_authenticated():
+		if request.user.get_profile().is_gameover():
+			return render_to_response('game_over.html')
+
 		room_id = request.session.get('room_id', None)
 		if room_id:
 			try:
@@ -116,38 +144,45 @@ def question(request):
 
 def answer(request):
 	if request.user.is_authenticated() and request.method == 'POST':
+		if request.user.get_profile().is_gameover():
+			return HttpResponseForbidden()
+		
 		room_id = request.session.get('room_id', None)
 		if room_id and 'answer' in request.POST:
 			given_answer = request.POST['answer'].strip()
-			user = request.user
-			t = get_object_or_404(Turn, room=room_id, user=user, complete=False)
-			count = Result.objects.filter(turn=t).count()
-			result = Result.objects.filter(turn=t, answer='')[0]
+			turn = get_object_or_404(Turn, room=room_id, user=request.user, complete=False)
+			count = Result.objects.filter(turn=turn).count()
+			result = Result.objects.filter(turn=turn, answer='')[0]
+			profile = request.user.get_profile()
 			try:	
 				if result.index < count:
 					index = result.index + 1
-					question = Result.objects.get(turn=t, index=index).question.question
+					question = Result.objects.get(turn=turn, index=index).question.question
 				else:
 					index = -1 # No more questions
 					question = None
-					t.complete = True
-					t.save()
+					turn.complete = True
+					turn.save()
 				correct = given_answer == result.question.real_answer
 				if correct:
 					# Give user some points
-					user.get_profile().points += result.question.points
-					t.total_points += result.question.points
+					profile.points += result.question.points
+					turn.total_points += result.question.points
 				else:
 					# For wrong answer users lose (question points / 2)
 					penalty = result.question.points / 2
-					user.get_profile().points -= penalty
-					t.total_points -= penalty
-				t.save()
-				user.get_profile().save()
+					diff = profile.points - penalty
+					if diff <= 0:
+						profile.points = 0
+					else:
+						profile.points -= penalty
+					turn.total_points -= penalty
+				turn.save()
+				profile.save()
 				result.answer = given_answer
 				result.save()
 				return HttpResponse(json.dumps({'correct': correct, 'index': index, \
-						'question': question, 'points': user.get_profile().points}), \
+						'question': question, 'points': profile.points}), \
 						mimetype='application/json')
 			except Result.DoesNotExist as e:
 				return HttpResponse(e)
@@ -168,9 +203,14 @@ def signup(request):
 		form = SignupForm()
 		return render_to_response('signup.html', {'form': form}, context_instance=RequestContext(request))
 
-
 def game_over(request):
 	if not request.user.get_profile().is_gameover():
 		return HttpResponseRedirect('/')
 
 	return render_to_response('game_over.html', {'user': request.user})
+
+def manage(request):
+	if request.user.is_staff:
+		return render_to_response('manage.html', { 'user': request.user })
+	else:
+		return HttpResponseRedirect('/')

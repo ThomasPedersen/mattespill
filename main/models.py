@@ -3,19 +3,26 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 
 class UserProfile(models.Model):	
+	'''Class defining the UserProfile model'''
 	user = models.ForeignKey(User, unique=True)
 	points = models.IntegerField(default=50, null=True)
 
 	def __unicode__(self):
 		return "%s's profile" % self.user
-	
+
 	def groups(self):
+		'''Returns all groups this user's a member of'''
 		return self.user.groups.all()
-	
+
+	def is_gameover(self):
+		return self.points <= 0
+
 def create_user_profile(sender, instance, created, **kwargs):
+	'''Creates user profile'''
 	if created:
 		profile, created = UserProfile.objects.get_or_create(user=instance)
-		
+
+
 post_save.connect(create_user_profile, sender=User)
 
 class Room(models.Model):

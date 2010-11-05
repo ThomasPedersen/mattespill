@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.test.client import Client
 from main.models import Turn 
+from json import loads
 
 class ViewsTest(TestCase):
 
@@ -41,4 +42,18 @@ class ViewsTest(TestCase):
 		self.assertEqual(turns.count(), 1)
 		# Check if turn contains atleast one Result object
 		self.assertTrue(turns[0].result_set.count() > 1)
+
+	def test_buyhint(self):
+		# Log in
+		self.client.login(username='foo', password='foo')
+		response = self.client.get('/room/1/')
+		self.assertEqual(response.status_code, 200)
+		# Buy hint
+		response = self.client.post('/buyhint/')
+		from_json = loads(response.content)
+		self.assertNotEqual(from_json['hint'], None)
+		# Buy another hint (should return None since user does not have enough points)
+		response = self.client.post('/buyhint/')
+		from_json = loads(response.content)
+		self.assertEqual(from_json['hint'], None)
 
