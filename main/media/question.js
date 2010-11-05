@@ -62,6 +62,10 @@ $(function() {
 			dataType: 'json',
 			data: {answer: $('input[name=answer]').val()},
 			success: function(data, textStatus) {
+				if (data.points <= 0) {
+					window.location = '/game_over/';
+				}
+
 				$('#num_points').text(data.points);
 
 				if (data.correct) {

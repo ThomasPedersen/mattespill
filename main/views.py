@@ -168,3 +168,9 @@ def signup(request):
 		form = SignupForm()
 		return render_to_response('signup.html', {'form': form}, context_instance=RequestContext(request))
 
+
+def game_over(request):
+	if not request.user.get_profile().is_gameover():
+		return HttpResponseRedirect('/')
+
+	return render_to_response('game_over.html', {'user': request.user})
