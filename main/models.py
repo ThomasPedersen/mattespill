@@ -11,7 +11,7 @@ class UserProfile(models.Model):
 		return "%s's profile" % self.user
 
 	def groups(self):
-	'''Returns all groups this user's a member of'''
+		'''Returns all groups this user's a member of'''
 		return self.user.groups.all()
 
 def create_user_profile(sender, instance, created, **kwargs):
