@@ -43,8 +43,8 @@ def room(request, room_id):
 		except Turn.DoesNotExist:
 			t = Turn(date_start=datetime.now(), date_end=None, user=request.user, room=room)
 			t.save()
-			# Fetch 10 random questions for the given room
-			questions = Question.objects.filter(room=room).order_by('?')[:10]
+			# Fetch 10 random questions for the given room (sorted by points/difficulty)
+			questions = Question.objects.filter(room=room).order_by('?').order_by('points')[:10]
 			# Add Result objects (question and answer pairs) for each question
 			i = 1 # Sequence number for each question
 			for q in questions:
@@ -73,7 +73,7 @@ def buyhint(request):
 			cost = hint[0].cost
 			if profile.points - cost < 1:
 				return HttpResponse(json.dumps({'points': profile.points, \
-						'hint': None}))
+						'hint': None}), mimetype='application/json')
 			else:
 				profile.points -= cost
 				profile.save()
@@ -84,12 +84,12 @@ def buyhint(request):
 		return HttpResponseForbidden()
 
 def stats(request):
-    if request.user.is_authenticated():
-        # Get max 10 users ordered by points desc
-        users = UserProfile.objects.order_by('-points')[:10]
-        return render_to_response('stats.html', {'user': request.user, 'users': users})
-    else:
-        return HttpResponseRedirect(login_url)
+	if request.user.is_authenticated():
+		# Get max 10 users ordered by points desc
+		users = UserProfile.objects.order_by('-points')[:10]
+		return render_to_response('stats.html', {'user': request.user, 'users': users})
+	else:
+		return HttpResponseRedirect(login_url)
 
 def question(request):
 	if request.user.is_authenticated():
