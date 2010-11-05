@@ -84,12 +84,12 @@ def buyhint(request):
 		return HttpResponseForbidden()
 
 def stats(request):
-    if request.user.is_authenticated():
-        # Get max 10 users ordered by points desc
-        users = UserProfile.objects.order_by('-points')[:10]
-        return render_to_response('stats.html', {'user': request.user, 'users': users})
-    else:
-        return HttpResponseRedirect(login_url)
+	if request.user.is_authenticated():
+		# Get max 10 users ordered by points desc
+		users = UserProfile.objects.order_by('-points')[:10]
+		return render_to_response('stats.html', {'user': request.user, 'users': users})
+	else:
+		return HttpResponseRedirect(login_url)
 
 def question(request):
 	if request.user.is_authenticated():
