@@ -64,6 +64,7 @@ $(function() {
 			success: function(data, textStatus) {
 				if (data.points <= 0) {
 					window.location = '/game_over/';
+					return;
 				}
 
 				$('#num_points').text(data.points);
