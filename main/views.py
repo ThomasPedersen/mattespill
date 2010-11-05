@@ -16,9 +16,12 @@ login_url = '/login/'
 
 def index(request):
 	if request.user.is_authenticated():
-		rooms = Room.objects.all()
-		return render_to_response('home.html', {'user': request.user, 'home': True, \
-				'rooms': rooms})
+		if request.user.get_profile().is_gameover():
+			return render_to_response('game_over.html', {'user': request.user})		
+		else:
+			rooms = Room.objects.all()
+			return render_to_response('home.html', {'user': request.user, 'home': True, \
+					'rooms': rooms})
 	else:
 		return HttpResponseRedirect(login_url)
 
@@ -89,7 +92,7 @@ def buyhint(request):
 			# Check if user has enough points
 			profile = request.user.get_profile()
 			cost = hint[0].cost
-			if profile.points - cost < 1:
+			if profile.points - cost <= 0:
 				return HttpResponse(json.dumps({'points': profile.points, \
 						'hint': None}), mimetype='application/json')
 			else:
@@ -148,8 +151,8 @@ def answer(request):
 		if room_id and 'answer' in request.POST:
 			given_answer = request.POST['answer'].strip()
 			turn = get_object_or_404(Turn, room=room_id, user=request.user, complete=False)
-			count = Result.objects.filter(turn=t).count()
-			result = Result.objects.filter(turn=t, answer='')[0]
+			count = Result.objects.filter(turn=turn).count()
+			result = Result.objects.filter(turn=turn, answer='')[0]
 			profile = request.user.get_profile()
 			try:	
 				if result.index < count:
