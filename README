@@ -1,3 +1,7 @@
+Begynn å skrive docstrings!
+
+http://epydoc.sourceforge.net/epytext.html
+
 For å sette navn og mail på innsjekingene:
 git config --global user.name "Tekkub"
 git config --global user.email "tekkub@gmail.com"
