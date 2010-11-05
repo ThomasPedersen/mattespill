@@ -1,0 +1,52 @@
+{% extends "outer.html" %}
+
+{% block head %}
+<style type="text/css">
+#game_over_wrapper {
+	text-align: center;
+}
+#game_over {
+	font-size: 200%;
+	color: #fff;
+	text-shadow: #C94A4A .07em .07em 0;
+	margin-top: -1em;
+
+	border: .2em solid #C94A4A;
+	background-color: #EC5757;
+	-moz-border-radius: .7em;
+ 	-webkit-border-radius: .7em;
+	border-radius: .7em;
+	position: absolute;
+	bottom: 2em;
+	left: 50%;
+	margin-left: -4em;
+	padding: .2em .5em;
+}
+#sad_bear {
+	width: 10em;
+}
+#line2 {
+	font-size: 150%;
+}
+#sad_bear_wrapper {
+	position: relative;
+}
+#try_again {
+	margin: 2em;
+}
+</style>
+{% endblock %}
+
+
+{% block content %}
+<div id="game_over_wrapper">
+<div id="sad_bear_wrapper">
+	<img id="sad_bear" src="/media/images/sad_bear.png" alt="Lei seg" />
+	<div id="game_over">Spillet er over!</div>
+</div>
+<p id="line2">Du gikk tom for penger</p>
+
+<p id="try_again" class="button_container"><span class="simple_button"><a href="/newgame/">Pr&oslash;v igjen!</a></span></p>
+
+</div>
+{% endblock %}
