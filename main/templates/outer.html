@@ -66,6 +66,9 @@
 	{% endfor %}
 	</td>
 	<td class="align_center">Gullmynter: <span id="num_points">{{ user.get_profile.points }}</span></td>
+	{% if user.is_staff %}
+	<td class="align_right"><a href="/manage">Administrer</a></td>
+	{% endif %}
 	<td class="align_right"><a href="/logout">Avslutt spillet</a></td>
 	{% else %}
 	<td class="align_center">Logg inn for å spille mattespillet.</td>

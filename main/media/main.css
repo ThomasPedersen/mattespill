@@ -68,7 +68,7 @@ a:hover {
 	width: 100%;
 }
 #headertable td {
-	width: 33%;
+	white-space: nowrap;
 }
 .align_center {
 	text-align: center;

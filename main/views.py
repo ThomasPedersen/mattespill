@@ -170,3 +170,8 @@ def signup(request):
 		form = SignupForm()
 		return render_to_response('signup.html', {'form': form}, context_instance=RequestContext(request))
 
+def manage(request):
+	if request.user.is_staff:
+		return render_to_response('manage.html', { 'user': request.user })
+	else:
+		return HttpResponseRedirect('/')
