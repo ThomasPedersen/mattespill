@@ -17,6 +17,7 @@ urlpatterns = patterns('',
     (r'^stats/$', 'mattespill.main.views.stats'),
 	(r'^buyhint/$', 'mattespill.main.views.buyhint'),
 	(r'^manage/$', 'mattespill.main.views.manage'),
+	(r'^newgame/$', 'mattespill.main.views.newgame'),
 
 	# Uncomment the next line to enable the admin:
 	(r'^admin/', include(admin.site.urls)),
