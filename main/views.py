@@ -80,6 +80,8 @@ def buyhint(request):
 				# Return json response
 				return HttpResponse(json.dumps({'points': profile.points, 'hint': hint[0].text}), \
 						mimetype='application/json')
+		else:
+			return HttpResponse('You must select a room before buying hints')
 	else:
 		return HttpResponseForbidden()
 
