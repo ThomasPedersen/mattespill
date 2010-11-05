@@ -2,6 +2,9 @@ from django.contrib.auth.models import User
 from django import forms
 
 class SignupForm(forms.Form):
+	'''
+	Class defining the signup form for creating new users
+	'''
 	Brukernavn = forms.CharField(max_length=30)
 	Epost = forms.EmailField();
 	Passord = forms.CharField(max_length=30, 
