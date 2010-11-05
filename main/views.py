@@ -28,7 +28,7 @@ def index(request):
 def room(request, room_id):
 	if request.user.is_authenticated():
 		if request.user.get_profile().is_gameover():
-			return render_to_response('game_over.html')
+			return render_to_response('game_over.html', {'user': request.user})
 		
 		sess_room_id = request.session.get('room_id', None)
 		if not sess_room_id or sess_room_id != room_id:
@@ -109,7 +109,7 @@ def buyhint(request):
 def stats(request):
 	if request.user.is_authenticated():
 		if request.user.get_profile().is_gameover():
-			return render_to_response('game_over.html')
+			return render_to_response('game_over.html', {'user': request.user})
 		# Get max 10 users ordered by points desc
 		users = UserProfile.objects.order_by('-points')[:10]
 		return render_to_response('stats.html', {'user': request.user, 'users': users})
@@ -119,7 +119,7 @@ def stats(request):
 def question(request):
 	if request.user.is_authenticated():
 		if request.user.get_profile().is_gameover():
-			return render_to_response('game_over.html')
+			return render_to_response('game_over.html', {'user': request.user})
 
 		room_id = request.session.get('room_id', None)
 		if room_id:
@@ -206,7 +206,6 @@ def signup(request):
 def game_over(request):
 	if not request.user.get_profile().is_gameover():
 		return HttpResponseRedirect('/')
-
 	return render_to_response('game_over.html', {'user': request.user})
 
 def manage(request):
