@@ -14,6 +14,9 @@ class UserProfile(models.Model):
 		'''Returns all groups this user's a member of'''
 		return self.user.groups.all()
 
+	def is_gameover(self):
+		return self.points <= 0
+
 def create_user_profile(sender, instance, created, **kwargs):
 	'''Creates user profile'''
 	if created:

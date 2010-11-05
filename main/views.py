@@ -24,6 +24,9 @@ def index(request):
 
 def room(request, room_id):
 	if request.user.is_authenticated():
+		if request.user.get_profile().is_gameover():
+			return render_to_response('gameover.html')
+		
 		sess_room_id = request.session.get('room_id', None)
 		if not sess_room_id or sess_room_id != room_id:
 			room = get_object_or_404(Room, pk=room_id)
@@ -62,8 +65,23 @@ def logout(request):
 	auth.logout(request)
 	return HttpResponseRedirect('/')
 
-def buyhint(request):
+def newgame(request):
 	if request.user.is_authenticated():
+		if request.user.get_profile().is_gameover():
+			# Delete all turns for user
+			Turn.objects.filter(user=request.user).delete()
+			# Reset points for user
+			profile = request.user.get_profile()
+			profile.points = 50
+			profile.save()
+		return HttpResponseRedirect('/')
+	else:
+		return HttpResponseRedirect(login_url)
+
+def buyhint(request):
+	if request.user.is_authenticated() and request.method == 'POST':
+		if request.user.get_profile().is_gameover():
+			return HttpResponseForbidden
 		# Get a random hint
 		room_id = request.session.get('room_id', None)
 		if room_id:
@@ -87,6 +105,8 @@ def buyhint(request):
 
 def stats(request):
 	if request.user.is_authenticated():
+		if request.user.get_profile().is_gameover():
+			return render_to_response('gameover.html')
 		# Get max 10 users ordered by points desc
 		users = UserProfile.objects.order_by('-points')[:10]
 		return render_to_response('stats.html', {'user': request.user, 'users': users})
@@ -95,6 +115,9 @@ def stats(request):
 
 def question(request):
 	if request.user.is_authenticated():
+		if request.user.get_profile().is_gameover():
+			return render_to_response('gameover.html')
+
 		room_id = request.session.get('room_id', None)
 		if room_id:
 			try:
@@ -118,6 +141,9 @@ def question(request):
 
 def answer(request):
 	if request.user.is_authenticated() and request.method == 'POST':
+		if request.user.get_profile().is_gameover():
+			return HttpResponseForbidden()
+		
 		room_id = request.session.get('room_id', None)
 		if room_id and 'answer' in request.POST:
 			given_answer = request.POST['answer'].strip()
