@@ -1,4 +1,5 @@
 var bearTimer;
+var expireTimer;
 
 
 function nl2br(str) {
@@ -52,6 +53,16 @@ function stopBear() {
 	}, 400, $('#hintbear').hide);
 }
 
+function resetExpire() {
+	if (expireTimer != null)
+		clearTimeout(expireTimer);
+
+	expireTimer = setTimeout(function() {
+		window.location = '/';
+	}, 10000);
+}
+
+
 $(function() {
 	$('.start_button').click(function() {
 		if ($.trim($('input[name=answer]').val()) == '') {
@@ -94,6 +105,7 @@ $(function() {
 					$('#question_text').text(data.question);
 
 					startBear();
+					//resetExpire();
 				}
 			},
 			error: function(XMLHttpRequest, textStatus) {
@@ -109,4 +121,5 @@ $(function() {
 
 	$('input[name=answer]').focus();
 	startBear();
+	//resetExpire();
 });

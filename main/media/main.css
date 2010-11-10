@@ -141,6 +141,9 @@ a:hover {
 .back_button {
 	margin-top: 4em;
 }
+.error_text {
+	color: #C94A4A;
+}
 
 
 table.styled {

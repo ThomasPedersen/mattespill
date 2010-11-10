@@ -1,6 +1,20 @@
 {% extends "outer.html" %}
 
 {% block head %}
+<style type="text/css">
+.error_box {
+	font-size: 120%;
+	color: #fff;
+	text-shadow: #C94A4A .07em .07em 0;
+
+	border: .2em solid #C94A4A;
+	background-color: #EC5757;
+	-moz-border-radius: .7em;
+ 	-webkit-border-radius: .7em;
+	border-radius: .7em;
+	padding: .2em .5em;
+}
+</style>
 <script src="/media/peekbear.js" type="text/javascript"></script>
 {% endblock %}
 
@@ -10,6 +24,9 @@
 <p>Trykk <a href="/">her</a> for å gå til mattespillet.</p>
 {% else %}
 <h1>Logg inn</h1>
+{% if form.errors %}
+<p><span class="error_box">Feil brukernavn og/eller passord.</p>
+{% endif %}
 <form action="{% url django.contrib.auth.views.login %}" method="post">
 	{% csrf_token %}
 	<table>
