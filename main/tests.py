@@ -95,4 +95,7 @@ class ViewsTest(TestCase):
 		real_answer = Turn.objects.filter(user__username='foo')[0].result_set.all()[0].question.real_answer
 		response = self.client.post('/answer/', {'answer': real_answer})
 		self.assertEqual(response.status_code, 200)
-
+		# Incorrect answer (numeric, should be successful)
+		response = self.client.post('/answer/', {'answer': 42})
+		self.assertEqual(response.status_code, 200)
+	
