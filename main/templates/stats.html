@@ -16,19 +16,19 @@ table tr.user_points td {
 <p>Her kan du se en oversikt over de 10 beste spillerne.</p>
 
 <table class="styled">
- <tr>
-    <th>Brukernavn</th>
-	<th>Navn</th>
-	<th>Antall poeng</th>
-</tr>
-{% for u in users %}
+	<tr>
+		<th>Brukernavn</th>
+		<th>Navn</th>
+		<th>Antall poeng</th>
+	</tr>
+	{% for u in users %}
 
-<tr{% if forloop.first %} class="most_points" {% else %}{% ifequal user u.user %} class="user_points" {% endifequal %}{% endif %}>
-    <td>{{ u.user.username }}</td>
-    <td>{{ u.user.first_name }} {{ u.user.last_name }}</td>
-	<td>{{ u.points }}</td>
-</tr>
-{% endfor %}
+	<tr{% if forloop.first %} class="most_points" {% else %}{% ifequal user u.user %} class="user_points" {% endifequal %}{% endif %}>
+		<td>{{ u.user.username }}</td>
+		<td>{{ u.user.first_name }} {{ u.user.last_name }}</td>
+		<td>{{ u.points }}</td>
+	</tr>
+	{% endfor %}
 </table>
 
 <p class="back_button"><a href="/">G&aring; tilbake til hovedsiden</a></p>
