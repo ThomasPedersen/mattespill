@@ -14,10 +14,22 @@ git pull
 
 HVIS DU FUCKA OPP OG KLARTE Å SKRIVE RM OG VIL TILBAKE (OBS! Forkaster alle dine endringer):
 git reset --hard origin
-(voila)
 
-For å kjøre testserver:
-python manage.py syncdb
+Sync db:
+rm main.sqlite (just in case)
+pythn manage.py syncdb (svar no på superuser)
+
+Testserver:
 python manage.py runserver
 
-testasdasd
+Kjør enhetstester:
+python manage.py test
+
+Dump database:
+python manage.py dumpdata --exclude=contenttypes > initial_data.json
+
+Databaseshell:
+python manage.py dbshell
+
+Pythonshell med Django env:
+python manage.py shell
