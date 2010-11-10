@@ -1,11 +1,7 @@
 {% extends "outer.html" %}
 
 {% block head %}
-<style type="text/css">
-label {
-	display: block;
-}
-</style>
+
 {% endblock %}
 
 {% block content %}
@@ -15,7 +11,9 @@ label {
 {% else %}
 <h1>Registrer bruker</h1>	
 		<form action="/signup/" method="post">{% csrf_token %}
-			{{ form.as_p }}
+			<table class="signup">
+			{{ form.as_table }}
+			</table>
 			<input type="submit" value="Submit" />
 		</form>
 {% endif %}
