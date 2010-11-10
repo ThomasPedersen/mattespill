@@ -7,6 +7,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
+from django.contrib.auth.models import Group
 from datetime import datetime
 from mattespill.main.models import Question, Room, Turn, Result, UserProfile, Hint
 from mattespill.main.forms import SignupForm
@@ -113,6 +114,18 @@ def stats(request):
 		# Get max 10 users ordered by points desc
 		users = UserProfile.objects.order_by('-points')[:10]
 		return render_to_response('stats.html', {'user': request.user, 'users': users})
+	else:
+		return HttpResponseRedirect(login_url)
+
+def stats_grouped(request):
+	if request.user.is_authenticated():
+		if request.user.is_staff():
+			stats = {}
+			for group in Group.objects.all():
+				stats[group.name] = UserProfile.objects.order_by('-points')
+			return render_to_response('stats_grouped.html', {'stats': stats})
+		else:
+			return HttpResponseRedirect('/')
 	else:
 		return HttpResponseRedirect(login_url)
 
