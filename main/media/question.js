@@ -87,10 +87,12 @@ $(function() {
 				$('#num_points').text(data.points);
 
 				if (data.correct) {
+					$('#earned_points').text(data.earned)
 					$('#wrong_answer').hide();
 					$('#correct_answer').fadeIn();
 				}
 				else {
+					$('#lost_points').text(data.lost)
 					$('#correct_answer').hide();
 					$('#wrong_answer').fadeIn();
 				}

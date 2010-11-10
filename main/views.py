@@ -178,10 +178,13 @@ def answer(request):
 					turn.complete = True
 					turn.save()
 				correct = given_answer == result.question.real_answer
+				earned = None
+				lost = None
 				if correct:
 					# Give user some points
 					profile.points += result.question.points
 					turn.total_points += result.question.points
+					earned = result.question.points
 				else:
 					# For wrong answer users lose (question points / 2)
 					penalty = result.question.points / 2
@@ -191,13 +194,14 @@ def answer(request):
 					else:
 						profile.points -= penalty
 					turn.total_points -= penalty
+					lost = penalty
 				turn.save()
 				profile.save()
 				result.answer = given_answer
 				result.save()
 				return HttpResponse(json.dumps({'correct': correct, 'index': index, \
-						'question': question, 'points': profile.points}), \
-						mimetype='application/json')
+						'question': question, 'points': profile.points, 'earned': earned, \
+						'lost': lost}), mimetype='application/json')
 			except Result.DoesNotExist as e:
 				return HttpResponse(e)
 	else:
