@@ -8,7 +8,9 @@
 	font-weight: bold;
 	src: url('fonts/Aller_Bd.ttf');
 }
-
+.signup tr{
+	text-align:left;
+}
 body {
 	font-family: Aller, sans-serif;
 	margin: 0;
