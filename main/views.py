@@ -11,7 +11,8 @@ from django.contrib.auth.models import Group
 from datetime import datetime
 from mattespill.main.models import Question, Room, Turn, Result, UserProfile, Hint
 from mattespill.main.forms import SignupForm
-import json
+from re import match
+from json import dumps
 
 login_url = '/login/'
 
@@ -94,13 +95,13 @@ def buyhint(request):
 			profile = request.user.get_profile()
 			cost = hint[0].cost
 			if profile.points - cost <= 0:
-				return HttpResponse(json.dumps({'points': profile.points, \
+				return HttpResponse(dumps({'points': profile.points, \
 						'hint': None}), mimetype='application/json')
 			else:
 				profile.points -= cost
 				profile.save()
 				# Return json response
-				return HttpResponse(json.dumps({'points': profile.points, 'hint': hint[0].text}), \
+				return HttpResponse(dumps({'points': profile.points, 'hint': hint[0].text}), \
 						mimetype='application/json')
 		else:
 			return HttpResponse('You must select a room before buying hints')
@@ -164,6 +165,11 @@ def answer(request):
 		room_id = request.session.get('room_id', None)
 		if room_id and 'answer' in request.POST:
 			given_answer = request.POST['answer'].strip()
+			
+			# Check if given_answer is a number
+			if match('^-?\d+$', given_answer) == None:
+				return HttpResponse('Answer needs to be a number')
+			
 			turn = get_object_or_404(Turn, room=room_id, user=request.user, complete=False)
 			count = Result.objects.filter(turn=turn).count()
 			result = Result.objects.filter(turn=turn, answer='')[0]
@@ -199,7 +205,7 @@ def answer(request):
 				profile.save()
 				result.answer = given_answer
 				result.save()
-				return HttpResponse(json.dumps({'correct': correct, 'index': index, \
+				return HttpResponse(dumps({'correct': correct, 'index': index, \
 						'question': question, 'points': profile.points, 'earned': earned, \
 						'lost': lost}), mimetype='application/json')
 			except Result.DoesNotExist as e:
