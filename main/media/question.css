@@ -42,6 +42,8 @@ input[name=answer] {
 	display: none;
 	opacity: 0;
 	margin-right: -7em;
+	width: 20em;
+	text-align: right;
 }
 #hintbear img {
 	width: 10em;
@@ -49,9 +51,10 @@ input[name=answer] {
 #hintbear .dialogbox {
 	display: none;
 	position: absolute;
-	left: -9em;
+	left: 0em;
 	top: 0em;
 	max-width: 20em;
+	text-align: left;
 
 	padding: .5em;
 	border: .2em solid #000;
