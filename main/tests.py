@@ -6,8 +6,10 @@ from json import loads
 class ViewsTest(TestCase):
 
 	def test_login(self):
+		# Login, redirects on success
 		response = self.client.post('/login/', {'username': 'foo', 'password': 'foo'})
 		self.assertEqual(response.status_code, 302)
+		# Invalid login, refreshes on login
 		response = self.client.post('/login/', {'username': 'invaliduser', 'password': \
 				'invalidpassword'})
 		self.assertEqual(response.status_code, 200)
@@ -56,4 +58,11 @@ class ViewsTest(TestCase):
 		response = self.client.post('/buyhint/')
 		from_json = loads(response.content)
 		self.assertEqual(from_json['hint'], None)
+
+	def test_newgame():
+		pass
+
+	def test_answer():
+		pass
+
 
