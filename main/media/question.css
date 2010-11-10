@@ -54,6 +54,7 @@ input[name=answer] {
 	left: 0em;
 	top: 0em;
 	max-width: 20em;
+	text-align: left;
 
 	padding: .5em;
 	border: .2em solid #000;
