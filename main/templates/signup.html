@@ -1,4 +1,13 @@
 {% extends "outer.html" %}
+
+{% block head %}
+<style type="text/css">
+label {
+	display: block;
+}
+</style>
+{% endblock %}
+
 {% block content %}
 {% if user.username %}
 <h1>Allerede logget inn</h1>
