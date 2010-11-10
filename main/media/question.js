@@ -71,10 +71,10 @@ function resetExpire() {
 
 $(function() {
 	$('.start_button').click(function() {
-		if ($.trim($('input[name=answer]').val()) == '') {
+		if (!$('input[name=answer]').val().match(/^-?\d+$/)) {
 			$('#correct_answer').hide();
 			$('#wrong_answer').hide();
-			$('#empty_answer').fadeIn();	
+			$('#invalid_answer').fadeIn();	
 			$('input[name=answer]').val('');
 			return;
 		}
@@ -96,13 +96,13 @@ $(function() {
 
 				if (data.correct) {
 					$('#earned_points').text(data.earned)
-					$('#empty_answer').hide();
+					$('#invalid_answer').hide();
 					$('#wrong_answer').hide();
 					$('#correct_answer').fadeIn();
 				}
 				else {
 					$('#lost_points').text(data.lost)
-					$('#empty_answer').hide();
+					$('#invalid_answer').hide();
 					$('#correct_answer').hide();
 					$('#wrong_answer').fadeIn();
 				}
