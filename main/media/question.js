@@ -1,5 +1,10 @@
 var bearTimer;
 
+
+function nl2br(str) {
+	return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + '<br />' + '$2');
+}
+
 function showBear() {
 	$('#hintbear').css('cursor', 'pointer').click(function() {
 		$.ajax({
@@ -17,10 +22,11 @@ function showBear() {
 					setTimeout(stopBear, 2000);
 				}
 				else
-					$('#hintbear .dialogbox').text(data.hint);
+					$('#hintbear .dialogbox').html(nl2br(data.hint));
 			},
 			error: function(XMLHttpRequest, textStatus) {
-				alert('Det oppstod en feil');
+				$('#hintbear .dialogbox').text('Det oppstod en feil');
+				setTimeout(stopBear, 2000);
 			}
 		});
 	});
@@ -91,7 +97,7 @@ $(function() {
 				}
 			},
 			error: function(XMLHttpRequest, textStatus) {
-				alert('Det oppstod en feil');
+				alert('Det oppstod en feil!');
 			}
 		});
 	});

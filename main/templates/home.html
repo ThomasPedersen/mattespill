@@ -92,6 +92,10 @@ img#treasure_chest {
 	color: inherit;
 	text-decoration: none;
 }
+#top_button {
+	margin: 2em 0;
+}
+
 /* http://robertnyman.com/2010/01/11/css-background-transparency-without-affecting-child-elements-through-rgba-and-filters/ */
 </style>
 {% endblock %}
@@ -100,8 +104,8 @@ img#treasure_chest {
 <div id="right_content">
 	<p class="chest_header">Skattekiste</p>
 	<img id="treasure_chest" src="/media/images/treasurechest.png" alt="skattekiste" />
-    <p class="gold_coins">Du har <span class="gold_text"> {{ user.get_profile.points }} </span> gullmynter</p>
-    <p><a href="/stats/">Vis liste over de beste spillerne</a></p>
+	<p class="gold_coins">Du har <span class="gold_text"> {{ user.get_profile.points }} </span> gullmynter</p>
+	<p id="top_button" class="button_container"><a title="Vis liste over de beste spillerne" href="/stats/"><span class="simple_button">TOPP-liste</span></a></p>
 </div>
 <div id="left_content">
 
