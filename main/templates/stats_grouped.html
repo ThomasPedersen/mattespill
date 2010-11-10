@@ -12,15 +12,15 @@ table tr.most_points td {
 <h1>Resultater</h1>
 <p>Her kan du se resultater for hver enkelt gruppe.</p>
 
-{% for group, users in stats.items %}
-	<h2>{{ group }}</h2>
-	<table class="styled" id="table_{{ group }}">
+{% for value in stats %}
+	<h2>{{ value.0 }}</h2>
+	<table class="styled" id="table_{{ value.0 }}">
 	 <tr>
 		<th>Brukernavn</th>
 		<th>Navn</th>
 		<th>Antall poeng</th>
 	</tr>
-	{% for u in users %}
+	{% for u in value.1 %}
 
 	<tr{% if forloop.first %} class="most_points"{% endif %}>
 		<td>{{ u.user.username }}</td>

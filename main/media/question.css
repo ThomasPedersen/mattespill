@@ -4,7 +4,10 @@
 #wrong_answer {
 	background-color: #fcc;
 }
-#correct_answer, #wrong_answer {
+#empty_answer {
+	background-color: #fbfbb2;
+}
+#correct_answer, #wrong_answer, #empty_answer {
 	display: none;
 	padding: .3em;
 	-moz-border-radius: .3em;
