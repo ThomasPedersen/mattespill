@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.test.client import Client
-from main.models import Turn 
+from main.models import Turn, UserProfile
 from json import loads
 
 class ViewsTest(TestCase):
@@ -59,10 +59,40 @@ class ViewsTest(TestCase):
 		from_json = loads(response.content)
 		self.assertEqual(from_json['hint'], None)
 
-	def test_newgame():
-		pass
+	def test_newgame(self):
+		# Log in
+		self.client.login(username='foo', password='foo')
+		# Try calling new game without being game over (should not reset points)
+		profile = UserProfile.objects.get(user__username='foo')
+		current_points = profile.points
+		response = self.client.get('/newgame/')
+		self.assertEqual(response.status_code, 302)
+		self.assertEqual(current_points, profile.points)
+		# Remove foo's points
+		profile.points = 0
+		profile.save()
+		self.assertEqual(profile.points, 0)
+		# Profile should now be game over
+		self.assertTrue(profile.is_gameover())
+		# Reset game
+		response = self.client.get('/newgame/')
+		self.assertEqual(response.status_code, 302)
+		# Refetch profile and compare points (should now be reset to 50)
+		profile = UserProfile.objects.get(user__username='foo')
+		self.assertEqual(profile.points, 50)
+		# Verify that all Turns for foo has been deleted
+		self.assertEqual(Turn.objects.filter(user__username='foo').count(), 0)
 
-	def test_answer():
-		pass
-
+	def test_answer(self):
+		# Log in
+		self.client.login(username='foo', password='foo')
+		# Start a turn
+		response = self.client.get('/room/1/')
+		# Answer question (non-numeric answer, should fail with bad request)
+		response = self.client.post('/answer/', {'answer': 'sdf'})
+		self.assertEqual(response.status_code, 400)
+		# Send correct answer (ok, this is cheating...)
+		real_answer = Turn.objects.filter(user__username='foo')[0].result_set.all()[0].question.real_answer
+		response = self.client.post('/answer/', {'answer': real_answer})
+		self.assertEqual(response.status_code, 200)
 

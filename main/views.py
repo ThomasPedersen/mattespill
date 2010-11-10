@@ -2,7 +2,7 @@
 
 from django.template import RequestContext, Context, loader
 from django.utils import simplejson
-from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden, HttpResponseBadRequest
 from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
@@ -168,7 +168,7 @@ def answer(request):
 			
 			# Check if given_answer is a number
 			if match('^-?\d+$', given_answer) == None:
-				return HttpResponse('Answer needs to be a number')
+				return HttpResponseBadRequest()
 			
 			turn = get_object_or_404(Turn, room=room_id, user=request.user, complete=False)
 			count = Result.objects.filter(turn=turn).count()
@@ -209,7 +209,7 @@ def answer(request):
 						'question': question, 'points': profile.points, 'earned': earned, \
 						'lost': lost}), mimetype='application/json')
 			except Result.DoesNotExist as e:
-				return HttpResponse(e)
+				return HttpResponseServerError(e)
 	else:
 		return HttpResponseRedirect(login_url)
 
