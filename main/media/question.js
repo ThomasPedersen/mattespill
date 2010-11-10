@@ -7,13 +7,13 @@ function nl2br(str) {
 }
 
 function showBear() {
-	$('#hintbear').css('cursor', 'pointer').click(function() {
+	$('#hintbear img, #hintbear .dialogbox').css('cursor', 'pointer').click(function() {
 		$.ajax({
 			type: 'POST',
 			url: '/buyhint/',
 			dataType: 'json',
 			complete: function() {
-				$('#hintbear').unbind('click').css('cursor', 'auto');
+				$('#hintbear img, #hintbear .dialogbox').unbind('click').css('cursor', 'auto');
 			},
 			success: function(data, textStatus) {
 				$('#num_points').text(data.points);
@@ -32,13 +32,15 @@ function showBear() {
 		});
 	});
 
-	$('#hintbear .dialogbox').html('Har du lyst p&aring; hjelp?<br />Klikk p&aring; meg!');
+	$('#hintbear .dialogbox').html('Har du lyst p&aring; hjelp?<br />Klikk p&aring; meg!<br />(Et hint koster 20 gullmynter)');
 	$('#hintbear').show().animate({
 		opacity: 1,
-		marginRight: '0em'
+		marginRight: '-4em'
 	}, 1000, function() {
 		$('#hintbear .dialogbox').fadeIn(500);
 	});
+
+	playSound('slide_whistle_up.mp3');
 }
 function startBear() {
 	bearTimer = setTimeout(showBear, 5000);
@@ -47,10 +49,14 @@ function stopBear() {
 	if (bearTimer != null)
 		clearTimeout(bearTimer);
 
-	$('#hintbear').animate({
-		opacity: 0,
-		marginRight: '-7em'
-	}, 400, $('#hintbear').hide);
+	if ($('#hintbear').is(':visible')) {
+		$('#hintbear').animate({
+			opacity: 0,
+			marginRight: '-7em'
+		}, 400, $('#hintbear').hide);
+
+		//playSound('slide_whistle_down.mp3');
+	}
 }
 
 function resetExpire() {

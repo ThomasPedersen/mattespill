@@ -1,3 +1,8 @@
+var soundListener = new Object();
+
+soundListener.onInit = function() {};
+soundListener.onUpdate = function() {};
+
 function getWindowWidth() {
 	if (window.innerWidth)
 		return window.innerWidth;
@@ -22,3 +27,12 @@ function updateFontSize() {
 
 $(window).resize(updateFontSize);
 $(updateFontSize);
+
+
+function playSound(name) {
+	object = $('#audio_flash').get(0);
+
+	object.SetVariable('method:setUrl', '/media/sounds/' + name);
+	object.SetVariable('method:play', '');
+	object.SetVariable('enabled', 'true');
+}

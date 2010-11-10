@@ -38,14 +38,13 @@ input[name=answer] {
 	box-shadow: 0 0 .7em #bbb;
 }
 #hintbear {
-	cursor: pointer;
 	float: right;
 	position: relative;
 
 	display: none;
 	opacity: 0;
 	margin-right: -7em;
-	width: 20em;
+	width: 24em;
 	text-align: right;
 }
 #hintbear img {
