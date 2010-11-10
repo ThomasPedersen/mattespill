@@ -7,6 +7,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
+from django.contrib.auth.models import Group
 from datetime import datetime
 from mattespill.main.models import Question, Room, Turn, Result, UserProfile, Hint
 from mattespill.main.forms import SignupForm
@@ -116,6 +117,19 @@ def stats(request):
 	else:
 		return HttpResponseRedirect(login_url)
 
+def stats_grouped(request):
+	if request.user.is_authenticated():
+		if request.user.is_staff:
+			stats = {}
+			for group in Group.objects.order_by('name').all():
+				# Filtering on foreign keys awesomeness!
+				stats[group.name] = UserProfile.objects.filter(user__groups__name=group.name).order_by('-points')
+			return render_to_response('stats_grouped.html', {'user': request.user, 'stats': stats})
+		else:
+			return HttpResponseRedirect('/')
+	else:
+		return HttpResponseRedirect(login_url)
+
 def question(request):
 	if request.user.is_authenticated():
 		if request.user.get_profile().is_gameover():
@@ -204,12 +218,19 @@ def signup(request):
 		return render_to_response('signup.html', {'form': form}, context_instance=RequestContext(request))
 
 def game_over(request):
-	if not request.user.get_profile().is_gameover():
-		return HttpResponseRedirect('/')
-	return render_to_response('game_over.html', {'user': request.user})
+	if request.user.is_authenticated():
+		if not request.user.get_profile().is_gameover():
+			return HttpResponseRedirect('/')
+		return render_to_response('game_over.html', {'user': request.user})
+	else:
+		return HttpResponseRedirect(login_url)
 
 def manage(request):
-	if request.user.is_staff:
-		return render_to_response('manage.html', { 'user': request.user })
+	if request.user.is_authenticated():
+		if request.user.is_staff:
+			return render_to_response('manage.html', { 'user': request.user })
+		else:
+			return HttpResponseRedirect('/')
 	else:
-		return HttpResponseRedirect('/')
+		return HttpResponseRedirect(login_url)
+
