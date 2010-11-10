@@ -124,7 +124,7 @@ def stats_grouped(request):
 			for group in Group.objects.order_by('name').all():
 				# Filtering on foreign keys awesomeness!
 				stats[group.name] = UserProfile.objects.filter(user__groups__name=group.name).order_by('-points')
-			return render_to_response('stats_grouped.html', {'stats': stats})
+			return render_to_response('stats_grouped.html', {'user': request.user, 'stats': stats})
 		else:
 			return HttpResponseRedirect('/')
 	else:
