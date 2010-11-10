@@ -5,6 +5,9 @@
 table tr.most_points td {
 	background-color: #aaffaa !important;
 }
+table tr.user_points td {
+	background-color: #fbfbb2 !important;
+}
 </style>
 {% endblock %}
 
@@ -20,7 +23,7 @@ table tr.most_points td {
 </tr>
 {% for u in users %}
 
-<tr{% if forloop.first %} class="most_points"{% endif %}>
+<tr{% if forloop.first %} class="most_points" {% else %}{% ifequal user u.user %} class="user_points" {% endifequal %}{% endif %}>
     <td>{{ u.user.username }}</td>
     <td>{{ u.user.first_name }} {{ u.user.last_name }}</td>
 	<td>{{ u.points }}</td>
