@@ -1,7 +1,8 @@
 var bearTimer;
 
+
 function nl2br(str) {
-	return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
+	return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + '<br />' + '$2');
 }
 
 function showBear() {
@@ -21,7 +22,7 @@ function showBear() {
 					setTimeout(stopBear, 2000);
 				}
 				else
-					$('#hintbear .dialogbox').text(nl2br(data.hint));
+					$('#hintbear .dialogbox').html(nl2br(data.hint));
 			},
 			error: function(XMLHttpRequest, textStatus) {
 				$('#hintbear .dialogbox').text('Det oppstod en feil');
