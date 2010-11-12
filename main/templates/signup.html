@@ -9,12 +9,17 @@
 <h1>Allerede logget inn</h1>
 <p>Trykk <a href="/">her</a> for &aring; g&aring; til mattespillet.</p>
 {% else %}
-<h1>Registrer bruker</h1>	
+<h1>Registrer bruker</h1>
+		{{ form.username.errors }}
+		{% if error %}
+			<p><span class="error_box">{{ error }}</p>
+		{% endif %}
 		<form action="/signup/" method="post">{% csrf_token %}
 			<table class="signup">
 			{{ form.as_table }}
-			</table>
-			<input type="submit" value="Submit" />
+			</table>			
+			<input type="submit" value="Submit" class="button_container"/>
+			<p class="back_button"><a href="/">Tilbake</a></p>
 		</form>
 {% endif %}
 {% endblock %}
