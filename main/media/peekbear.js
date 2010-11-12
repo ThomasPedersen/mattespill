@@ -2,7 +2,7 @@ var peekbearImages = ['peekbearbottom.png', 'peekbearright.png', 'peekbearleft.p
 
 function showPeekbear() {
 	var i = Math.floor(Math.random()*(peekbearImages.length));
-	var element = $('<img src="/media/images/' + peekbearImages[i] + '" alt="Tittei" />').
+	var element = $('<img id="peekbear" src="/media/images/' + peekbearImages[i] + '" alt="Tittei" />').
 		css('position', 'fixed');
 
 	var bearSize = '3em';
@@ -49,6 +49,9 @@ function showPeekbear() {
 	}
 
 	$('body').append(element);
+	$('#peekbear').css('cursor', 'pointer').click(function() {
+		playSound('slide_whistle_up.mp3');
+	});
 }
 
 $(function() {
