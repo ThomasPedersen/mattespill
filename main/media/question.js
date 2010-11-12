@@ -99,12 +99,14 @@ $(function() {
 					$('#invalid_answer').hide();
 					$('#wrong_answer').hide();
 					$('#correct_answer').fadeIn();
+					playSound('coins.mp3');
 				}
 				else {
 					$('#lost_points').text(data.lost)
 					$('#invalid_answer').hide();
 					$('#correct_answer').hide();
 					$('#wrong_answer').fadeIn();
+					playSound('wrong.mp3');
 				}
 
 				// If turn finished
@@ -120,7 +122,6 @@ $(function() {
 
 					startBear();
 					//resetExpire();
-					playSound('coins.mp3');
 				}
 			},
 			error: function(XMLHttpRequest, textStatus) {
