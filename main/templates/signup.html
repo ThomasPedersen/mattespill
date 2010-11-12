@@ -4,15 +4,15 @@
 
 <h1>Registrer bruker</h1>
 		{{ form.username.errors }}
-		{% if error %}
-			<p><span class="error_box">{{ error }}</p>
+		{% if form.errors %}
+			<p><span class="error_box">En eller annen feil.</p>
 		{% endif %}
 		<form action="/signup/" method="post">{% csrf_token %}
 			<table class="signup">
 			{{ form.as_table }}
 			</table>			
 			<input type="submit" value="Registrer" class="button_container"/>
-			<p class="back_button"><a href="/">Tilbake</a></p>
+			<p class="back_button"><a href="/manage/">G&aring; tilbake til administrasjonssiden</a></p>
 		</form>
 
 {% endblock %}

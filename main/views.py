@@ -221,7 +221,7 @@ def signup(request):
 				form = SignupForm(data=request.POST)
 				if form.is_valid():
 					form.save();
-					return HttpResponseRedirect('/')
+					return HttpResponseRedirect('/manage/')
 			form = SignupForm()
 			return render_to_response('signup.html', {'form': form}, context_instance=RequestContext(request))
 		else:
