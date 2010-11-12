@@ -216,7 +216,7 @@ def answer(request):
 
 def signup(request):
 	if request.user.is_authenticated():
-		if rquest.user.is_staff:
+		if request.user.is_staff:
 			if request.method == 'POST':
 				form = SignupForm(data=request.POST)
 				if form.is_valid():
