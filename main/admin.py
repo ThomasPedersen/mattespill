@@ -9,9 +9,7 @@ class QuestionAdmin(admin.ModelAdmin):
 	fields = ['question', 'real_answer', 'room', 'author', 'points']
 
 admin.site.register(Question, QuestionAdmin)
-admin.site.register(Result)
 admin.site.register(Room)
-admin.site.register(Turn)
 admin.site.register(UserProfile)
 admin.site.register(Hint)
 

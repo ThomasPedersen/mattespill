@@ -20,6 +20,7 @@ table tr.user_points td {
 		<th>Brukernavn</th>
 		<th>Navn</th>
 		<th>Antall poeng</th>
+		<th>Klasse</th>
 	</tr>
 	{% for u in users %}
 
@@ -27,6 +28,7 @@ table tr.user_points td {
 		<td>{{ u.user.username }}</td>
 		<td>{{ u.user.first_name }} {{ u.user.last_name }}</td>
 		<td>{{ u.points }}</td>
+		<td>{{ u.user.groups.get }}</td>
 	</tr>
 	{% endfor %}
 </table>

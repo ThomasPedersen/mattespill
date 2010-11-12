@@ -6,14 +6,20 @@ table tr.most_points td {
 	background-color: #aaffaa !important;
 }
 </style>
+
+<script src="/media/groupstats.js" type="text/javascript"></script>
 {% endblock %}
 
 {% block content %}
 <h1>Resultater</h1>
 <p>Her kan du se resultater for hver enkelt gruppe.</p>
+<p><b>Klikk p&aring; klassen for &aring; utvide tabell.</b></p>
 
 {% for value in stats %}
+<div class="group">
 	<h2>{{ value.0 }}</h2>
+
+	<div class="toggle">
 	<table class="styled" id="table_{{ value.0 }}">
 	 <tr>
 		<th>Brukernavn</th>
@@ -29,7 +35,9 @@ table tr.most_points td {
 	</tr>
 	{% endfor %}
 	</table>
+	</div>
+</div>
 {% endfor %}
 
-<p class="back_button"><a href="/">G&aring; tilbake til hovedsiden</a></p>
+<p class="back_button"><a href="/manage/">G&aring; tilbake til hovedsiden</a></p>
 {% endblock %}

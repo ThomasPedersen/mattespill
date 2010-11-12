@@ -222,12 +222,8 @@ def signup(request):
 				if form.is_valid():
 					form.save();
 					return HttpResponseRedirect('/')
-				else:
-					form = SignupForm()
-					return render_to_response('signup.html', {'form': form}, context_instance=RequestContext(request))
-			else: 
-				form = SignupForm()
-				return render_to_response('signup.html', {'form': form}, context_instance=RequestContext(request))
+			form = SignupForm()
+			return render_to_response('signup.html', {'form': form}, context_instance=RequestContext(request))
 		else:
 			return HttpResponseRedirect('/')
 	else:
