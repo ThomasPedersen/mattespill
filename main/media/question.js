@@ -19,7 +19,7 @@ function showBear() {
 				$('#num_points').text(data.points);
 
 				if (data.hint == null) {
-					$('#hintbear .dialogbox').text('Du har nok for lite penger!');
+					$('#hintbear .dialogbox').text('Du har nok for lite gullmynter!');
 					setTimeout(stopBear, 2000);
 				}
 				else
