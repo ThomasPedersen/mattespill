@@ -43,7 +43,7 @@ function showBear() {
 	playSound('slide_whistle_up.mp3');
 }
 function startBear() {
-	bearTimer = setTimeout(showBear, 5000);
+	bearTimer = setTimeout(showBear, 10000);
 }
 function stopBear() {
 	if (bearTimer != null)
@@ -107,9 +107,11 @@ $(function() {
 					$('#wrong_answer').fadeIn();
 				}
 
+				// If turn finished
 				if (data.index < 0) {
 					$('#question_wrapper').remove();
 					$('#finished_wrapper').show();
+					playSound('applause.mp3');
 				}
 				else {
 					$('input[name=answer]').val('').focus();
@@ -118,6 +120,7 @@ $(function() {
 
 					startBear();
 					//resetExpire();
+					playSound('coins.mp3');
 				}
 			},
 			error: function(XMLHttpRequest, textStatus) {

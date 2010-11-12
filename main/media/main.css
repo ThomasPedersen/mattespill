@@ -146,6 +146,9 @@ a:hover {
 .error_text {
 	color: #C94A4A;
 }
+.bold {
+	font-weight: bold;
+}
 
 
 table.styled {

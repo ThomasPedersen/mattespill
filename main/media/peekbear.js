@@ -50,7 +50,14 @@ function showPeekbear() {
 
 	$('body').append(element);
 	$('#peekbear').css('cursor', 'pointer').click(function() {
-		playSound('slide_whistle_up.mp3');
+		$(this).stop(true).unbind('click').css('cursor', 'auto');
+		setTimeout(function() {
+			$('#peekbear').fadeOut(1500, function() {
+				$(this).remove();
+			});
+		}, 3000);
+
+		playSound('heehee.mp3');
 	});
 }
 
