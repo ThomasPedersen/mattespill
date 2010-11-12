@@ -1,14 +1,7 @@
 {% extends "outer.html" %}
 
-{% block head %}
-
-{% endblock %}
-
 {% block content %}
-{% if user.username %}
-<h1>Allerede logget inn</h1>
-<p>Trykk <a href="/">her</a> for &aring; g&aring; til mattespillet.</p>
-{% else %}
+
 <h1>Registrer bruker</h1>
 		{{ form.username.errors }}
 		{% if error %}
@@ -21,5 +14,5 @@
 			<input type="submit" value="Submit" class="button_container"/>
 			<p class="back_button"><a href="/">Tilbake</a></p>
 		</form>
-{% endif %}
+
 {% endblock %}
