@@ -4,8 +4,8 @@
 
 <h1>Registrer bruker</h1>
 		{{ form.username.errors }}
-		{% if error %}
-			<p><span class="error_box">{{ error }}</p>
+		{% if form.errors %}
+			<p><span class="error_box">En eller annen feil.</p>
 		{% endif %}
 		<form action="/signup/" method="post">{% csrf_token %}
 			<table class="signup">
