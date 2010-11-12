@@ -113,9 +113,9 @@ a:hover {
 .gold_text {
 	vertical-align: bottom;
 	font-size: 140%;
-	color: #ff0;
+	color: #009;
 	font-weight: bold;
-	text-shadow: #000 0 0 5px;
+	-text-shadow: #ff0 0 0 5px;
 }
 #logout_reminder {
 	font-size: 150%;
