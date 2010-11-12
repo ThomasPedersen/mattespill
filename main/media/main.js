@@ -30,9 +30,12 @@ $(updateFontSize);
 
 
 function playSound(name) {
-	object = $('#audio_flash').get(0);
+	try {
+		object = $('#audio_flash').get(0);
 
-	object.SetVariable('method:setUrl', '/media/sounds/' + name);
-	object.SetVariable('method:play', '');
-	object.SetVariable('enabled', 'true');
+		object.SetVariable('method:setUrl', '/media/sounds/' + name);
+		object.SetVariable('method:play', '');
+		object.SetVariable('enabled', 'true');
+	}
+	catch (e) {}
 }
