@@ -49,6 +49,8 @@ function stopBear() {
 	if (bearTimer != null)
 		clearTimeout(bearTimer);
 
+	$('#hintbear img, #hintbear .dialogbox').unbind('click').css('cursor', 'auto');
+
 	if ($('#hintbear').is(':visible')) {
 		$('#hintbear').animate({
 			opacity: 0,
