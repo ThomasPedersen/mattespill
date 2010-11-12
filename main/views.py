@@ -215,18 +215,20 @@ def answer(request):
 
 
 def signup(request):
-	if request.method == 'POST':
-		form = SignupForm(data=request.POST)
-		if form.is_valid():
-			form.save();
-			return HttpResponseRedirect('/')
-		else:
+	if request.user.is_authenticated():
+		if request.user.is_staff:
+			if request.method == 'POST':
+				form = SignupForm(data=request.POST)
+				if form.is_valid():
+					form.save();
+					return HttpResponseRedirect('/')
 			form = SignupForm()
-		return render_to_response('signup.html', {'form': form}, context_instance=RequestContext(request))
-	else: 
-		form = SignupForm()
-		return render_to_response('signup.html', {'form': form}, context_instance=RequestContext(request))
-
+			return render_to_response('signup.html', {'form': form}, context_instance=RequestContext(request))
+		else:
+			return HttpResponseRedirect('/')
+	else:
+			return HttpResponseRedirect(login_url)
+		
 def game_over(request):
 	if request.user.is_authenticated():
 		if not request.user.get_profile().is_gameover():

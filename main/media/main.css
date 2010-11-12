@@ -170,3 +170,7 @@ table.styled tr:nth-child(even) td {
 table.styled td, table.styled th {
 	padding: .3em .4em;
 }
+
+ul#admin_links {
+	color: #0000aa;
+}

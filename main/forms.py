@@ -1,11 +1,16 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django import forms
+
+default_errors = {
+    'required': 'This field is required',
+    'invalid': 'Enter a valid value'
+}
 
 class SignupForm(forms.Form):
 	'''
 	Class defining the signup form for creating new users
 	'''
-	Brukernavn = forms.CharField(max_length=30)
+	Brukernavn = forms.CharField(max_length=30, required=True, error_messages=default_errors)
 	Epost = forms.EmailField();
 	Passord = forms.CharField(max_length=30, 
 								widget=forms.PasswordInput(render_value=False))
@@ -13,8 +18,9 @@ class SignupForm(forms.Form):
 								widget=forms.PasswordInput(render_value=False))
 	Fornavn = forms.CharField(max_length=30)
 	Etternavn = forms.CharField(max_length=30)
+	Klasse = forms.ModelChoiceField(queryset = Group.objects.all(), initial = Group.objects.all()[0])
 	
-	def clean_username(self):
+	def clean_Brukernavn(self):
 		try:
 			User.objects.get(username=self.cleaned_data['Brukernavn'])
 		except User.DoesNotExist:
@@ -32,6 +38,8 @@ class SignupForm(forms.Form):
 											email=self.cleaned_data['Epost'], 
 											password=self.cleaned_data['Passord'])
 		new_user.first_name = self.cleaned_data['Fornavn']
-		new_user.last_name = self.cleaned_data['Etternavn']		
+		new_user.last_name = self.cleaned_data['Etternavn']	
+		g = self.cleaned_data['Klasse']
+		new_user.groups.add(g)
 		new_user.save()
 		return new_user
