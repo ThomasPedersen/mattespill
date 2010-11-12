@@ -129,9 +129,19 @@ $(function() {
 		});
 	});
 
-	$('#answer_form').submit(function() {
+	var submit = function() {
 		$('.simple_button').click();
 		return false;
+	};
+
+	$('#answer_form').submit(submit);
+
+	// IE HACK
+	$('#answer_form input').keydown(function(e) {
+		if (e.keyCode == 13) {
+			$(this).parents('form').submit();
+			return false;
+		}
 	});
 
 	$('input[name=answer]').focus();
