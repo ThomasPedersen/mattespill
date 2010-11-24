@@ -17,6 +17,7 @@ from json import dumps
 login_url = '/login/'
 
 def index(request):
+	'''This is the method returning the home page, which is presented to the user by default'''
 	if request.user.is_authenticated():
 		if request.user.get_profile().is_gameover():
 			return render_to_response('game_over.html', {'user': request.user})		
@@ -28,6 +29,7 @@ def index(request):
 		return HttpResponseRedirect(login_url)
 
 def room(request, room_id):
+	'''This method returns a specific room'''
 	if request.user.is_authenticated():
 		if request.user.get_profile().is_gameover():
 			return render_to_response('game_over.html', {'user': request.user})
@@ -67,10 +69,12 @@ def room(request, room_id):
 		return HttpResponseRedirect(login_url)
 
 def logout(request):
+	'''This method performs logging out'''
 	auth.logout(request)
 	return HttpResponseRedirect('/')
 
 def newgame(request):
+	'''This method creates a new "session" for the user and redirects him to the homepage'''
 	if request.user.is_authenticated():
 		if request.user.get_profile().is_gameover():
 			# Delete all turns for user
@@ -84,6 +88,7 @@ def newgame(request):
 		return HttpResponseRedirect(login_url)
 
 def buyhint(request):
+	'''This method buys a hint for the user, and returns the hint and new point total as json'''
 	if request.user.is_authenticated() and request.method == 'POST':
 		if request.user.get_profile().is_gameover():
 			return HttpResponseForbidden
@@ -109,6 +114,7 @@ def buyhint(request):
 		return HttpResponseForbidden()
 
 def stats(request):
+	'''This method returns the statistics page'''
 	if request.user.is_authenticated():
 		if request.user.get_profile().is_gameover():
 			return render_to_response('game_over.html', {'user': request.user})
@@ -119,6 +125,7 @@ def stats(request):
 		return HttpResponseRedirect(login_url)
 
 def stats_grouped(request):
+	'''This method returns the statistics page, grouped by class, for "staff" only'''
 	if request.user.is_authenticated():
 		if request.user.is_staff:
 			stats = []
@@ -132,6 +139,10 @@ def stats_grouped(request):
 		return HttpResponseRedirect(login_url)
 
 def question(request):
+	'''
+	This method returns the question page and the first question.
+	Subsequent questions are fetched with AJAX/JSON when calling "answer"
+	'''
 	if request.user.is_authenticated():
 		if request.user.get_profile().is_gameover():
 			return render_to_response('game_over.html', {'user': request.user})
@@ -158,6 +169,7 @@ def question(request):
 		return HttpResponseRedirect(login_url)
 
 def answer(request):
+	'''Answer the current question with an AJAX call, returning the result in JSON'''
 	if request.user.is_authenticated() and request.method == 'POST':
 		if request.user.get_profile().is_gameover():
 			return HttpResponseForbidden()
@@ -215,6 +227,7 @@ def answer(request):
 
 
 def signup(request):
+	'''This method '''
 	if request.user.is_authenticated():
 		if request.user.is_staff:
 			if request.method == 'POST':
@@ -228,8 +241,9 @@ def signup(request):
 			return HttpResponseRedirect('/')
 	else:
 			return HttpResponseRedirect(login_url)
-		
+
 def game_over(request):
+	'''This method returns the game over page'''
 	if request.user.is_authenticated():
 		if not request.user.get_profile().is_gameover():
 			return HttpResponseRedirect('/')
@@ -238,6 +252,7 @@ def game_over(request):
 		return HttpResponseRedirect(login_url)
 
 def manage(request):
+	'''This returns the admin overview page'''
 	if request.user.is_authenticated():
 		if request.user.is_staff:
 			return render_to_response('manage.html', { 'user': request.user })
