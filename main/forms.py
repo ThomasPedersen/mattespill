@@ -10,13 +10,13 @@ class SignupForm(forms.Form):
 	'''
 	Class defining the signup form for creating new users
 	It contains the wollowing form fields:
-	- user name
-	- email
-	- password
-	- password confirmation
-	- last name
-	- first name
-	- class
+		- user name
+		- email
+		- password
+		- password confirmation
+		- last name
+		- first name
+		- class
 	'''
 	Brukernavn = forms.CharField(max_length=30, required=True, error_messages=default_errors)
 	Epost = forms.EmailField();

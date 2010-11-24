@@ -83,11 +83,11 @@ class Turn(models.Model):
 	This class represents a turn which is created everytime a user starts a round of
 	questions in a room.
 	It contains:
-	- a date which is when the turn started
-	- a date which is when the turn ended, if it has yet ended
-	- the user which this turn represents
-	- a boolean describing wether the turn has ended
-	- the total number of points accumulated during this turn
+		- a date which is when the turn started
+		- a date which is when the turn ended, if it has yet ended
+		- the user which this turn represents
+		- a boolean describing wether the turn has ended
+		- the total number of points accumulated during this turn
 	'''
 	date_start = models.DateTimeField()
 	date_end = models.DateTimeField(null=True)
@@ -105,10 +105,10 @@ class Result(models.Model):
 	'''
 	This class represents the result of a question submitted by a user.
 	It contains:
-	- a unique integer index
-	- a reference to which question this result answers
-	- a string containing the answer itself
-	- the turn in which this result was answered
+		- a unique integer index
+		- a reference to which question this result answers
+		- a string containing the answer itself
+		- the turn in which this result was answered
 	'''
 	index = models.IntegerField()
 	question = models.ForeignKey(Question)
